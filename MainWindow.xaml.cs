@@ -23,6 +23,8 @@ namespace DiseaseCalculator
         public MainWindow()
         {
             InitializeComponent();
+            Person vasya = new Person("vasya",true);
+            vasya.diseases.Add(new PersonalDisease(new Hemophilia(),true));
         }
     }
 }
