@@ -3,10 +3,38 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:DiseaseCalculator"
+        xmlns:local="clr-namespace:DiseaseCalculator" xmlns:classes="clr-namespace:DiseaseCalculator.Classes"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid>
-
+    <Window.Resources>
+        <DrawingBrush x:Key="diagramBackgroundCell" Viewport="0,0,20,20" ViewportUnits="Absolute" TileMode="Tile" Opacity="1">
+            <DrawingBrush.Drawing>
+                <GeometryDrawing>
+                    <GeometryDrawing.Geometry>
+                        <RectangleGeometry Rect="0,0,20,20"/>
+                    </GeometryDrawing.Geometry>
+                    <GeometryDrawing.Pen>
+                        <Pen Brush="LightGray" Thickness="0.5"/>
+                    </GeometryDrawing.Pen>
+                </GeometryDrawing>
+            </DrawingBrush.Drawing>
+        </DrawingBrush>
+    </Window.Resources>
+    <Grid x:Name="mainGrid" HorizontalAlignment="Left" VerticalAlignment="Top">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="25"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Menu x:Name="mainMenu">
+            <MenuItem Header="Меню">
+            </MenuItem>
+        </Menu>
+        <Grid Grid.Row="1" Width="800" Height="425">
+            <classes:Diagram x:Name="diagram">
+                <classes:Diagram.Background>
+                    <StaticResource ResourceKey="diagramBackgroundCell"/>
+                </classes:Diagram.Background>
+            </classes:Diagram>
+        </Grid>
     </Grid>
 </Window>

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DiseaseCalculator
+namespace DiseaseCalculator.Classes
 {
     abstract class Disease_abstraction
     {

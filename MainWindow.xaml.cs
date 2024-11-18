@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DiseaseCalculator.Classes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,8 +24,8 @@ namespace DiseaseCalculator
         public MainWindow()
         {
             InitializeComponent();
-            Person vasya = new Person("vasya",true);
-            vasya.diseases.Add(new PersonalDisease(new Hemophilia(),true));
+            PersonControl vasya = new PersonControl(diagram, new Person("vasya", true));
+            vasya.person.diseases.Add(new PersonalDisease(new Hemophilia(), true));
         }
     }
 }
