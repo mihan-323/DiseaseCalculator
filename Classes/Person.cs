@@ -12,12 +12,41 @@ namespace DiseaseCalculator.Classes
     {
         public readonly string name;
         public readonly bool gender;//true = male
+        public Person mother;
+        public Person father;
         public List<PersonalDisease> diseases = new List<PersonalDisease>();
 
         public Person(string name, bool gender)
         {
             this.name = name;
             this.gender = gender;
+        }
+
+        public void Calculate() 
+        {
+
+            if (!diseases.Contains(new PersonalDisease(Hemophilia.GetHemophiliaInstance(), true)))
+            {
+                float prob = 0.0f;
+                if (father != null)
+                {
+                    if (father.diseases.Count > 0)
+                    {
+                        prob += 0.5f;
+                    }
+                }
+                if (mother != null)
+                {
+                    if (mother.diseases.Count > 0)
+                    {
+                        prob += 0.5f;
+                    }
+                }
+                if (prob > 0.0f)
+                {
+                    diseases.Add(new PersonalDisease(Hemophilia.GetHemophiliaInstance(), false));
+                }
+            }
         }
     }
 }

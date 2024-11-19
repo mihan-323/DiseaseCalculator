@@ -16,12 +16,24 @@ namespace DiseaseCalculator.Classes
             this.name = name;
             this.infection_chance = infection_chance;
         }
+
+        public override string ToString()
+        {
+            return name;
+        }
     }
     class Hemophilia : Disease_abstraction
     {
-        public Hemophilia() : base("Гемофилия",0.5f)
+        static Hemophilia singleInstance = new Hemophilia();
+
+        private Hemophilia() : base("Гемофилия",0.5f)
         {
 
+        }
+
+        public static Hemophilia GetHemophiliaInstance() 
+        {
+            return singleInstance;
         }
     }
     class PersonalDisease
@@ -34,6 +46,11 @@ namespace DiseaseCalculator.Classes
         {
             this.disease_type = disease_type;
             this.is_ill = is_ill;
+        }
+
+        public override string ToString()
+        {
+            return disease_type.ToString() + " " + (is_ill ? "болен" : "предрасположен");
         }
     }
 }

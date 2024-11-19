@@ -17,7 +17,7 @@ namespace DiseaseCalculator.Classes
         Label labelDisease, labelLuck;
         public readonly Person person;
 
-        public PersonControl(Diagram diagram, Person _person)
+        public PersonControl(Canvas diagram, Person _person)
         {
             diagram.Children.Add(this);
             person = _person;
