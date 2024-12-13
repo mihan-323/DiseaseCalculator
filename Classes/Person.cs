@@ -22,9 +22,8 @@ namespace DiseaseCalculator.Classes
             this.gender = gender;
         }
 
-        public void Calculate() 
+        public void Calculate() //-------------------------------------------------------main logic------------------------------------------------------//
         {
-
             if (!diseases.Contains(new PersonalDisease(Hemophilia.GetHemophiliaInstance(), true)))
             {
                 float prob = 0.0f;
@@ -47,6 +46,24 @@ namespace DiseaseCalculator.Classes
                     diseases.Add(new PersonalDisease(Hemophilia.GetHemophiliaInstance(), false));
                 }
             }
+        }
+
+        public override string ToString()
+        {
+            string pdiseases = "";
+            if (diseases.Count > 0)
+            {
+                foreach (var item in diseases)
+                {
+                    pdiseases += item.ToString();
+                }
+            }
+            else
+            {
+                pdiseases = "здоров";
+            }
+
+            return name + " " + (gender ? "M" : "F") + " " + pdiseases;
         }
     }
 }

@@ -22,6 +22,7 @@ namespace DiseaseCalculator.Classes
             return name;
         }
     }
+
     class Hemophilia : Disease_abstraction
     {
         static Hemophilia singleInstance = new Hemophilia();
@@ -36,6 +37,7 @@ namespace DiseaseCalculator.Classes
             return singleInstance;
         }
     }
+
     class PersonalDisease
     {
         public readonly Disease_abstraction disease_type;

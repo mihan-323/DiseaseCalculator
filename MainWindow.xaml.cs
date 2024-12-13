@@ -25,10 +25,10 @@ namespace DiseaseCalculator
         {
             InitializeComponent();
             Person vasya = new Person("vasya",true);
-            vasya.diseases.Add(new PersonalDisease(Hemophilia.GetHemophiliaInstance(),true));
             Person vasya2 = new Person("vasya2", true);
             Person vasya3 = new Person("vasya3", true);
             Person vasya4 = new Person("vasya4", true);
+            vasya4.diseases.Add(new PersonalDisease(Hemophilia.GetHemophiliaInstance(), true));
             Person vasya5 = new Person("vasya5", true);
             PersonsGraph pg = new PersonsGraph(vasya);
             pg.AddVertex(vasya, vasya2);
@@ -44,14 +44,7 @@ namespace DiseaseCalculator
             pes[4]=vasya5;
             foreach (var item in pes)
             {
-                if (item.diseases.Count() > 0)
-                {
-                    RTVB.Text += " " + item.diseases[0];
-                }
-                else
-                {
-                    RTVB.Text += " healthy";
-                }
+                RTVB.Text += " " + item;
             }
             PersonControl vasyaa = new PersonControl(diagram, new Person("vasya", true));
             vasyaa.person.diseases.Add(new PersonalDisease(Hemophilia.GetHemophiliaInstance(), true));
