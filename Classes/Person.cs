@@ -26,24 +26,41 @@ namespace DiseaseCalculator.Classes
         {
             if (!diseases.Contains(new PersonalDisease(Hemophilia.GetHemophiliaInstance(), true)))
             {
+                float mutation_prob = 0.00002f;//спонтанная мутация 0.00002% по Холдейну
                 float prob = 0.0f;
-                if (father != null)
+                Predicate<PersonalDisease> search = x => x.Equals(new PersonalDisease(Hemophilia.GetHemophiliaInstance(), true));
+
+                if (gender == true)
                 {
-                    if (father.diseases.Count > 0)
+                    if (mother != null)
                     {
-                        prob += 0.5f;
+                        if (mother.diseases.FindAll(search).Count > 0)
+                        {
+                            prob += 0.5f * mother.diseases.Find(search).calculated_probability;
+                        }
                     }
                 }
-                if (mother != null)
+                else
                 {
-                    if (mother.diseases.Count > 0)
+                    if (father != null)
                     {
-                        prob += 0.5f;
+                        if (father.diseases.FindAll(search).Count > 0)
+                        {
+                            prob += 1 * father.diseases.Find(search).calculated_probability;
+                        }
+                    }
+                    if (mother != null)
+                    {
+                        if (mother.diseases.FindAll(search).Count > 0)
+                        {
+                            prob += 0.5f * mother.diseases.Find(search).calculated_probability;
+                        }
                     }
                 }
-                if (prob > 0.0f)
+                
+                if (prob > 0.0001f)
                 {
-                    diseases.Add(new PersonalDisease(Hemophilia.GetHemophiliaInstance(), false));
+                    diseases.Add(new PersonalDisease(Hemophilia.GetHemophiliaInstance(), prob));
                 }
             }
         }

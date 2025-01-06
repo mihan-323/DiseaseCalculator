@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace DiseaseCalculator.Classes
 {
@@ -38,7 +39,7 @@ namespace DiseaseCalculator.Classes
         }
     }
 
-    class PersonalDisease
+    class PersonalDisease : IEquatable<PersonalDisease>, IComparable<PersonalDisease>
     {
         public readonly Disease_abstraction disease_type;
         public readonly bool is_ill;
@@ -48,11 +49,49 @@ namespace DiseaseCalculator.Classes
         {
             this.disease_type = disease_type;
             this.is_ill = is_ill;
+            calculated_probability = 1;
+        }
+
+        public PersonalDisease(Disease_abstraction disease_type, float calculated_prob)
+        {
+            this.disease_type = disease_type;
+            this.is_ill = false;
+            this.calculated_probability = calculated_prob;
         }
 
         public override string ToString()
         {
             return disease_type.ToString() + " " + (is_ill ? "болен" : "предрасположен");
+        }
+
+        public bool Equals(PersonalDisease obj)
+        {
+            return obj.disease_type.name == disease_type.name;
+        }
+
+        public int CompareTo(PersonalDisease obj)
+        {
+            if (obj.calculated_probability == calculated_probability)
+            {
+                return 0;
+            }
+            else if (obj.calculated_probability > calculated_probability)
+            {
+                return -1;
+            }
+            else if (obj.calculated_probability < calculated_probability)
+            {
+                return 1;
+            }
+            else
+            {
+                return 0;
+            }
+        }
+
+        public override int GetHashCode()
+        {
+            return disease_type.name.GetHashCode();
         }
     }
 }

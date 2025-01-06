@@ -27,7 +27,7 @@ namespace DiseaseCalculator
             Person vasya = new Person("vasya",true);
             Person vasya2 = new Person("vasya2", true);
             Person vasya3 = new Person("vasya3", true);
-            Person vasya4 = new Person("vasya4", true);
+            Person vasya4 = new Person("vasya4", false);
             vasya4.diseases.Add(new PersonalDisease(Hemophilia.GetHemophiliaInstance(), true));
             Person vasya5 = new Person("vasya5", true);
             PersonsGraph pg = new PersonsGraph(vasya);
