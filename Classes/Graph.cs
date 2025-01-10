@@ -12,7 +12,8 @@ namespace DiseaseCalculator.Classes
 {
     class PersonsGraph
     {
-        AdjacencyGraph<Person, Edge<Person>> graph = new AdjacencyGraph<Person, Edge<Person>>();
+        // надо пересмотреть доступ
+        public AdjacencyGraph<Person, Edge<Person>> graph = new AdjacencyGraph<Person, Edge<Person>>();
         BreadthFirstSearchAlgorithm<Person, Edge<Person>> bfs;
         FloydWarshallAllShortestPathAlgorithm<Person, Edge<Person>> floydWarshall;
         Person target;

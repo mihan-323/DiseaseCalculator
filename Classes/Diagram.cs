@@ -11,7 +11,26 @@ namespace DiseaseCalculator.Classes
 {
     class Diagram : Canvas
     {
-        public Diagram()
+        public ScrollViewer vp;
+        public List<PersonControl> controls;
+
+        public Diagram(double diagramWidth, double diagramHeight, ScrollViewer _vp)
+        {
+            Background = (Brush)Application.Current.FindResource("diagramBackgroundCell");
+
+            Width = diagramWidth;
+            Height = diagramHeight;
+
+            vp = _vp;
+
+            Rect viewport = new Rect(0, 0, Width, Height);
+            Arrange(viewport);
+
+            HorizontalAlignment = HorizontalAlignment.Left;
+            VerticalAlignment = VerticalAlignment.Top;
+        }
+
+        public void CreateControlsByGraph(PersonsGraph graph)
         {
         }
     }

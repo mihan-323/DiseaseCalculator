@@ -21,33 +21,51 @@ namespace DiseaseCalculator
     /// </summary>
     public partial class MainWindow : Window
     {
+        Diagram diagram;
+
         public MainWindow()
         {
             InitializeComponent();
-            Person vasya = new Person("vasya",true);
-            Person vasya2 = new Person("vasya2", true);
-            Person vasya3 = new Person("vasya3", true);
-            Person vasya4 = new Person("vasya4", false);
+
+            // create diagram
+            diagram = new Diagram(1920, 1080, scroll);
+            diagramContainer.Children.Add(diagram);
+            
+            // create persons
+            Person vasya = new Person("Вася",true);
+            Person vasya2 = new Person("Вася 2", true);
+            Person vasya3 = new Person("Вася 3", true);
+            Person vasya4 = new Person("Женщина", false);
             vasya4.diseases.Add(new PersonalDisease(Hemophilia.GetHemophiliaInstance(), true));
-            Person vasya5 = new Person("vasya5", true);
+            Person vasya5 = new Person("Вася 5", true);
+
+            // create graph
             PersonsGraph pg = new PersonsGraph(vasya);
             pg.AddVertex(vasya, vasya2);
             pg.AddVertex(vasya, vasya3);
             pg.AddVertex(vasya, vasya4);
             pg.AddVertex(vasya4, vasya5);
             pg.Recalculate();
+
             Person[] pes = new Person[5];
             pes[0]=vasya;
             pes[1]=vasya2;
             pes[2]=vasya3;
             pes[3]=vasya4;
             pes[4]=vasya5;
+
             foreach (var item in pes)
             {
                 RTVB.Text += " " + item;
             }
-            PersonControl vasyaa = new PersonControl(diagram, new Person("vasya", true));
-            vasyaa.person.diseases.Add(new PersonalDisease(Hemophilia.GetHemophiliaInstance(), true));
+
+            // test person control
+            //PersonControl vasyaa = new PersonControl(diagram, new Person("Вася", true));
+            //vasyaa.person.diseases.Add(new PersonalDisease(Hemophilia.GetHemophiliaInstance(), true));
+
+            // create person controls
+            diagram.CreateControlsByGraph(pg);
+
         }
     }
 }

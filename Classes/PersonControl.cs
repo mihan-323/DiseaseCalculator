@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows;
+using System.Windows.Input;
 
 namespace DiseaseCalculator.Classes
 {
@@ -13,17 +14,24 @@ namespace DiseaseCalculator.Classes
     {
         Button diseases;
         Button parents;
-        TextBox textbox;
+        //TextBox textbox;
+        Label textbox;
         Label labelDisease, labelLuck;
         public readonly Person person;
+        Diagram diagram;
+        protected Point pos_old, mouse_old;
+        private bool isMoving;
+        protected Point position;
+        public Point Position { get => position; set => SetPosition(value); }
 
-        public PersonControl(Canvas diagram, Person _person)
+        public PersonControl(Diagram _diagram, Person _person)
         {
-            diagram.Children.Add(this);
+            diagram = _diagram;
+            //diagram.Children.Add(this);
             person = _person;
 
-            Width = 150;
-            Height = 50;
+            Width = 160;
+            Height = 80;
             Background = Brushes.LightGray;
 
             diseases = new Button();
@@ -40,11 +48,13 @@ namespace DiseaseCalculator.Classes
             parents.Margin = new Thickness(75 - 12.5, -25, 0, 0);
             Children.Add(parents);
 
-            textbox = new TextBox();
+            //textbox = new TextBox();
+            textbox = new Label();
             textbox.Width = 150;
             textbox.Height = 25;
             textbox.Margin = new Thickness(0, 12.5, 0, 0);
-            textbox.Text = person.name;
+            //textbox.Text = person.name;
+            textbox.Content = person.name;
             textbox.BorderBrush = Brushes.Transparent;
             Children.Add(textbox);
 
@@ -60,8 +70,8 @@ namespace DiseaseCalculator.Classes
 
             labelLuck = new Label();
             labelLuck.Content = "100%";
-            labelLuck.Width = 40;
-            labelLuck.Height = 25;
+            labelLuck.Width = 50;
+            labelLuck.Height = 30;
             labelLuck.Background = Brushes.LightGreen;
             labelLuck.Margin = new Thickness(110, 50, 0, 0);
             labelLuck.BorderBrush = Brushes.Black;
@@ -70,8 +80,72 @@ namespace DiseaseCalculator.Classes
 
             // cut me
             SetTop(this, 25);
+
+            MouseDown += Element_MouseDown;
+            MouseMove += Element_MouseMove;
+            MouseUp += Element_MouseUp;
+
+            isMoving = false;
+            position = new Point(0, 0);
+            SetLeft(this, 0);
+            SetTop(this, 0);
+
+            // наверное тут
+            diagram.Children.Add(this);
+        }
+        public void Element_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                mouse_old = e.GetPosition(diagram);
+                pos_old = Position;
+                CaptureMouse();
+                isMoving = true;
+                return;
+            }
         }
 
+        public void Element_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (!IsMouseCaptured)
+                return;
+
+            if (isMoving)
+            {
+                Vector offset = e.GetPosition(diagram) - mouse_old;
+                Point pos = pos_old + offset;
+
+                if (pos.X > diagram.vp.ActualWidth + diagram.vp.HorizontalOffset - this.Width)
+                    diagram.vp.LineRight();
+                if (pos.X < diagram.vp.HorizontalOffset)
+                    diagram.vp.LineLeft();
+                if (pos.Y > diagram.vp.ActualHeight + diagram.vp.VerticalOffset - this.Height)
+                    diagram.vp.LineDown();
+                if (pos.Y < diagram.vp.VerticalOffset)
+                    diagram.vp.LineUp();
+
+                SetPosition(pos);
+
+                return;
+            }
+        }
+
+        public void Element_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            if (isMoving)
+                isMoving = false;
+
+            ReleaseMouseCapture();
+        }
+
+        public void SetPosition(Point P)
+        {
+            P.X = Math.Clamp(P.X, 0, diagram.ActualWidth - this.Width);
+            P.Y = Math.Clamp(P.Y, 0, diagram.ActualHeight - this.Height);
+            position = P;
+            SetLeft(this, P.X);
+            SetTop(this, P.Y);
+        }
 
     }
 }

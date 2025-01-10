@@ -4,6 +4,12 @@
              xmlns:local="clr-namespace:DiseaseCalculator"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Dictionary.xaml"></ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+        
     </Application.Resources>
 </Application>

@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:DiseaseCalculator" xmlns:classes="clr-namespace:DiseaseCalculator.Classes"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Window.Resources>
+    <!--<Window.Resources>
         <DrawingBrush x:Key="diagramBackgroundCell" Viewport="0,0,20,20" ViewportUnits="Absolute" TileMode="Tile" Opacity="1">
             <DrawingBrush.Drawing>
                 <GeometryDrawing>
@@ -19,23 +19,29 @@
                 </GeometryDrawing>
             </DrawingBrush.Drawing>
         </DrawingBrush>
-    </Window.Resources>
+    </Window.Resources>-->
     <Grid x:Name="mainGrid" HorizontalAlignment="Left" VerticalAlignment="Top">
         <Grid.RowDefinitions>
             <RowDefinition Height="25"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="25"></RowDefinition>
         </Grid.RowDefinitions>
         <Menu x:Name="mainMenu">
             <MenuItem Header="Меню">
             </MenuItem>
         </Menu>
-        <Grid Grid.Row="1" Width="800" Height="425">
-            <Canvas x:Name="diagram">
-                <TextBox x:Name="RTVB" Canvas.Left="10" Canvas.Top="273" />
-                <Canvas.Background>
-                    <StaticResource ResourceKey="diagramBackgroundCell"/>
-                </Canvas.Background>
-            </Canvas>
+        <Grid Grid.Row="1">
+            <ScrollViewer x:Name="scroll" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                <Grid x:Name="diagramContainer">
+                    <!--<classes:Diagram x:Name="diagram">
+                        <TextBox x:Name="RTVB" Canvas.Left="10" Canvas.Top="273" />
+                        <Canvas.Background>
+                            <StaticResource ResourceKey="diagramBackgroundCell"/>
+                        </Canvas.Background>
+                    </classes:Diagram>-->
+                </Grid>
+            </ScrollViewer>
         </Grid>
+        <TextBox Grid.Row="2" x:Name="RTVB" Canvas.Left="10" Canvas.Top="273" />
     </Grid>
 </Window>
