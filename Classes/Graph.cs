@@ -21,7 +21,7 @@ namespace DiseaseCalculator.Classes
         public DijkstraShortestPathAlgorithm<PersonControl, Edge<PersonControl>> dijkstraSP;
 
         public PersonControl target;
-        string save_str;
+        //string save_str;
 
         public PersonsGraph(PersonControl p) 
         {
@@ -39,9 +39,9 @@ namespace DiseaseCalculator.Classes
 
         public void AddVertex(PersonControl parent, PersonControl child) 
         {
-            if (child.person.father != null && parent.person.gender)
+            if (child.Person.father != null && parent.Person.gender)
                 throw new Exception("Максимальное число родителей M: 1");
-            if (child.person.mother != null && !parent.person.gender)
+            if (child.Person.mother != null && !parent.Person.gender)
                 throw new Exception("Максимальное число родителей F: 1");
 
             if (!graph.Vertices.Contains(child))
@@ -57,13 +57,13 @@ namespace DiseaseCalculator.Classes
             graph.AddEdge(new Edge<PersonControl>(parent, child));
             child.AddLine(parent);
 
-            if (parent.person.gender)
+            if (parent.Person.gender)
             {
-                child.person.father = parent.person;
+                child.Person.father = parent.Person;
             }
             else
             {
-                child.person.mother = parent.person;
+                child.Person.mother = parent.Person;
             }
         }
 

@@ -26,7 +26,7 @@ namespace DiseaseCalculator.Classes
         {
             if (!diseases.Contains(new PersonalDisease(Hemophilia.GetHemophiliaInstance(), true)))
             {
-                float mutation_prob = 0.00002f;//спонтанная мутация 0.00002% по Холдейну
+                //float mutation_prob = 0.00002f;//спонтанная мутация 0.00002% по Холдейну
                 float prob = 0.0f;
                 Predicate<PersonalDisease> search = x => x.Equals(new PersonalDisease(Hemophilia.GetHemophiliaInstance(), true));
 

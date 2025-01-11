@@ -24,7 +24,7 @@ namespace DiseaseCalculator.Classes
             return new Point(x.X * fraction + to.X * (1.0 - fraction), x.Y * fraction + to.Y * (1.0 - fraction));
         }
 
-        static public TriangleFan CreateTriangleFan(PointCollection pointsFan, int maxTessLevel, double minTessDist)
+        public TriangleFan(PointCollection pointsFan, int maxTessLevel, double minTessDist)
         {
             PointCollection collision = new PointCollection();
 
@@ -80,11 +80,8 @@ namespace DiseaseCalculator.Classes
             for(int i = 0; i < vertCount; i++)
                 polygon.Points.Add(pointsFan[indices[i]]);
 
-            TriangleFan shape = new TriangleFan();
-            shape.points = pointsFan;
-            shape.collision = collision;
-
-            return shape;
+            this.points = pointsFan;
+            this.collision = collision;
         }
     }
 }

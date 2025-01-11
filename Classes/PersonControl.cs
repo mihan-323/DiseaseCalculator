@@ -15,16 +15,14 @@ namespace DiseaseCalculator.Classes
     {
         Button btnAddDisease;
         Button btnAddParent;
-        //TextBox textbox;
         Label labelName, labelGender;
         Label labelDisease, labelProb;
-        public readonly Person person;
+        Person person;
         Diagram diagram;
-        protected Point pos_old, mouse_old;
-        private bool isMoving;
-        protected Point position;
-        public Point Position { get => position; set => SetPosition(value); }
-        public TriangleFan shape;
+        Point pos_old, mouse_old;
+        bool isMoving;
+        Point position;
+        TriangleFan shape; 
         Button btnAddDiseaseHemophilia;
         TextBox txtParentName;
         Button btnAddParentGender;
@@ -33,6 +31,10 @@ namespace DiseaseCalculator.Classes
         TextBox txtChangeName;
         Label labelChangeName;
         Button btnChangeNameOk;
+
+        public PointCollection Collision { get => shape.collision; }
+        public Point Position { get => position; set => SetPosition(value); }
+        public Person Person { get => person; }
 
         Label SetupLabel(double w, double h, String s,
             double l = 0, double t = 0, double r = 0, double b = 0, 
@@ -181,7 +183,7 @@ namespace DiseaseCalculator.Classes
             quad.Add(new Point(160, 80));
             quad.Add(new Point(0, 80));
 
-            shape = TriangleFan.CreateTriangleFan(quad, 2, 2);
+            shape = new TriangleFan(quad, 2, 2);
 
             UpdateLabelsText();
         }

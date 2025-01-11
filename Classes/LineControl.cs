@@ -37,9 +37,9 @@ namespace DiseaseCalculator.Classes
             double d = 9999999;
             int k = 0;
 
-            for (int i = 0; i < from.shape.collision.Count; i++)
+            for (int i = 0; i < from.Collision.Count; i++)
             {
-                Point p1 = new Point(from.shape.collision[i].X + from.Position.X, from.shape.collision[i].Y + from.Position.Y);
+                Point p1 = new Point(from.Collision[i].X + from.Position.X, from.Collision[i].Y + from.Position.Y);
                 double d1 = Distance(p1, to);
                 if (d1 < d)
                 {

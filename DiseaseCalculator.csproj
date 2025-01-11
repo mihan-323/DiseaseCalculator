@@ -8,6 +8,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Classes\test\Person_v2.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Classes\test\Person_v2.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="QuikGraph" Version="2.5.0" />
   </ItemGroup>
 
