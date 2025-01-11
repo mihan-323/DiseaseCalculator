@@ -82,5 +82,13 @@ namespace DiseaseCalculator.Classes
 
             graph.Recalculate();
         }
+
+        public void AddVertexGraph(PersonControl parent, PersonControl child)
+        {
+            if (graph == null)
+                throw new InvalidOperationException("Контролы не знают о существовании графа");
+
+            graph.AddVertex(parent, child);
+        }
     }
 }

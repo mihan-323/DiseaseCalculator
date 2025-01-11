@@ -33,6 +33,11 @@ namespace DiseaseCalculator.Classes
 
         public void AddVertex(PersonControl parent, PersonControl child) 
         {
+            if (child.person.father != null && parent.person.gender)
+                throw new Exception("Максимальное число родителей M: 1");
+            if (child.person.mother != null && !parent.person.gender)
+                throw new Exception("Максимальное число родителей F: 1");
+
             if (!graph.Vertices.Contains(child))
             {
                 graph.AddVertex(child);
