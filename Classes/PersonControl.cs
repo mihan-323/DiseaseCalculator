@@ -31,13 +31,16 @@ namespace DiseaseCalculator.Classes
         Button btnAddParentOk;
         Label labelAddParent;
 
-        void SetupLabel(Label label, double w, double h, 
-            double l = 0, double t = 0, double r = 0, double b = 0, int bl = 0, int bt = 0, int br = 0, int bb = 0)
+        Label SetupLabel(double w, double h, String s,
+            double l = 0, double t = 0, double r = 0, double b = 0, 
+            int bl = 0, int bt = 0, int br = 0, int bb = 0, 
+            bool vis = true)
         {
+            Label label = new Label();
             label.Width = w;
             label.Height = h;
             label.Margin = new Thickness(l, t, r, b);
-            label.Content = "test";
+            label.Content = s;
             label.BorderBrush = Brushes.Transparent;
 
             if(bl > 0 || bt > 0 || br > 0 || bb > 0)
@@ -46,17 +49,62 @@ namespace DiseaseCalculator.Classes
                 label.BorderThickness = new Thickness(bl, bt, br, bb);
             }
 
+            if(vis)
+                label.Visibility = Visibility.Visible;
+            else
+                label.Visibility = Visibility.Collapsed;
+
             Children.Add(label);
+
+            return label;
         }
-        
-        void SetupButton(Button btn, double w, double h, string s,
-            double l = 0, double t = 0, double r = 0, double b = 0)
+
+        Button SetupButton(double w, double h, String s,
+            double l = 0, double t = 0, double r = 0, double b = 0, 
+            bool vis = true, 
+            RoutedEventHandler? clk = null)
         {
+            Button btn = new Button();
             btn.Content = s;
             btn.Width = w;
             btn.Height = h;
             btn.Margin = new Thickness(l, t, r, b);
+
+            if (vis)
+                btn.Visibility = Visibility.Visible;
+            else
+                btn.Visibility = Visibility.Collapsed;
+
+            if (clk != null)
+                btn.Click += clk;
+
             Children.Add(btn);
+
+            return btn;
+        }
+
+        TextBox SetupTextBox(double w, double h, String s,
+            double l = 0, double t = 0, double r = 0, double b = 0, 
+            bool vis = true, 
+            TextChangedEventHandler? upd = null)
+        {
+            TextBox tb = new TextBox();
+            tb.Text = s;
+            tb.Width = w;
+            tb.Height = h;
+            tb.Margin = new Thickness(l, t, r, b);
+
+            if (vis)
+                tb.Visibility = Visibility.Visible;
+            else
+                tb.Visibility = Visibility.Collapsed;
+
+            if (upd != null)
+                tb.TextChanged += upd;
+
+            Children.Add(tb);
+
+            return tb;
         }
 
         public PersonControl(Diagram _diagram, Person _person)
@@ -70,56 +118,23 @@ namespace DiseaseCalculator.Classes
             Background = Brushes.LightGray;
 
             //----------------------------------------
-            //           добавление родителя
-            labelAddParent = new Label();
-            SetupLabel(labelAddParent, 160, 25, 0, -85);
-            labelAddParent.Content = "Добавить родителя:";
-            labelAddParent.Visibility = Visibility.Collapsed;
-
-            txtParentName = new TextBox();
-            txtParentName.Width = 100;
-            txtParentName.Height = 25;
-            txtParentName.Margin = new Thickness(0, -35, 0, 0);
-            txtParentName.Visibility = Visibility.Collapsed;
-            Children.Add(txtParentName);
-
-            btnAddParentGender = new Button();
-            SetupButton(btnAddParentGender, 25, 25, "M", 105, -35, 0, 0);
-            btnAddParentGender.Visibility = Visibility.Collapsed;
-            btnAddParentGender.Click += BtnAddParentGender_Click;
-
-            btnAddParentOk = new Button();
-            SetupButton(btnAddParentOk, 25, 25 ,"Oк", 135, -35, 0, 0);
-            btnAddParentOk.Visibility = Visibility.Collapsed;
-            btnAddParentOk.Click += BtnAddParentOk_Click;
-
-            btnAddParent = new Button();
-            SetupButton(btnAddParent, 60, 15, "+", 50, 0);
-            btnAddParent.Click += BtnAddParent_Click;
+            // добавление родителя
+            labelAddParent = SetupLabel(160, 25, "Добавить родителя:", 0, -85, 0, 0, 0, 0, 0, 0, false);
+            txtParentName = SetupTextBox(100, 25, ":name:", 0, -35, 0, 0, false, null);
+            btnAddParentGender = SetupButton(25, 25, "M", 105, -35, 0, 0, false, BtnAddParentGender_Click);
+            btnAddParentOk = SetupButton(25, 25, "Oк", 135, -35, 0, 0, false, BtnAddParentOk_Click);
+            btnAddParent = SetupButton(60, 15, "+", 50, 0, 0, 0, true, BtnAddParent_Click);
 
             //----------------------------------------
-            //            добавление болезни
-            btnAddDiseaseHemophilia = new Button();
-            SetupButton(btnAddDiseaseHemophilia, 100, 25, "Гемофилия", 170);
-            btnAddDiseaseHemophilia.Visibility = Visibility.Collapsed;
-            btnAddDiseaseHemophilia.Click += BtnAddDiseaseHemophilia_Click;
-
-            btnAddDisease = new Button();
-            SetupButton(btnAddDisease, 25, 25, "+", 135, 12.5);
-            btnAddDisease.Click += BtnAddDisease_Click;
+            // добавление болезни
+            btnAddDiseaseHemophilia = SetupButton(100, 25, "Гемофилия", 170, 0, 0, 0, false, BtnAddDiseaseHemophilia_Click);
+            btnAddDisease = SetupButton(25, 25, "+", 135, 12.5, 0, 0, true, BtnAddDisease_Click);
 
             //----------------------------------------
-            labelName = new Label();
-            SetupLabel(labelName, 110, 25, 30, 15);
-            
-            labelGender = new Label();
-            SetupLabel(labelGender, 30, 25, 0, 15);
-
-            labelDisease = new Label();
-            SetupLabel(labelDisease, 110, 25, 0, 50, 0, 0, 0, 1);
-
-            labelProb = new Label();
-            SetupLabel(labelProb, 50, 30, 110, 50, 0, 0, 0, 1);
+            labelName = SetupLabel(110, 25, ":name:", 30, 15);
+            labelGender = SetupLabel(30, 25, ":M/F:", 0, 15);
+            labelDisease = SetupLabel(110, 25, ":disease:", 0, 50, 0, 0, 0, 1);
+            labelProb = SetupLabel(50, 30, ":prob:", 110, 50, 0, 0, 0, 1);
 
             // cut me
             SetTop(this, 25);
