@@ -27,21 +27,23 @@
             <RowDefinition Height="25"></RowDefinition>
         </Grid.RowDefinitions>
         <Menu x:Name="mainMenu">
-            <MenuItem Header="Меню">
+            <MenuItem Header="Файл">
+                <MenuItem x:Name="graphOpen" Header="Открыть" Click="GraphOpen"></MenuItem>
+                <MenuItem x:Name="graphCreate" Header="Создать" Click="GraphCreate"></MenuItem>
+                <MenuItem x:Name="graphSave" Header="Сохранить как" IsEnabled="False">
+                    <MenuItem Header=".json" Click="GraphSaveToJSON"></MenuItem>
+                </MenuItem>
+                <MenuItem x:Name="graphExport" Header="Экспортировать" IsEnabled="False">
+                    <MenuItem Header=".jpg" Click="GraphExportToJPG"></MenuItem>
+                </MenuItem>
+                <MenuItem x:Name="graphClose" Header="Закрыть" Click="GraphClose" IsEnabled="False"></MenuItem>
             </MenuItem>
         </Menu>
         <Grid Grid.Row="1">
             <ScrollViewer x:Name="scroll" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
-                <Grid x:Name="diagramContainer">
-                    <!--<classes:Diagram x:Name="diagram">
-                        <TextBox x:Name="RTVB" Canvas.Left="10" Canvas.Top="273" />
-                        <Canvas.Background>
-                            <StaticResource ResourceKey="diagramBackgroundCell"/>
-                        </Canvas.Background>
-                    </classes:Diagram>-->
-                </Grid>
+                <Grid x:Name="diagramContainer" Background="White"/>
             </ScrollViewer>
         </Grid>
-        <TextBox Grid.Row="2" x:Name="RTVB" Canvas.Left="10" Canvas.Top="273" />
+        <TextBox Grid.Row="2" x:Name="footer"/>
     </Grid>
 </Window>

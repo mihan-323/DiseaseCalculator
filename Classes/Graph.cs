@@ -20,21 +20,40 @@ namespace DiseaseCalculator.Classes
 
         public DijkstraShortestPathAlgorithm<PersonControl, Edge<PersonControl>> dijkstraSP;
 
-        public PersonControl target;
+        public PersonControl? target;
+        public bool isOpen = false;
         //string save_str;
 
-        public PersonsGraph(PersonControl p) 
+        public PersonsGraph(/*PersonControl p*/) 
         {
             bfs = new BreadthFirstSearchAlgorithm<PersonControl, Edge<PersonControl>>(graph);
 
             dijkstraSP = new DijkstraShortestPathAlgorithm<PersonControl, Edge<PersonControl>>(graph, double (Edge<PersonControl> t) => { return 1; });
-            dijkstraSP.SetRootVertex(p);
+            //dijkstraSP.SetRootVertex(p);
 
+            //graph.AddVertex(p);
+            //target = p;
+            //bfs.SetRootVertex(p);
+            //bfs.DiscoverVertex += new VertexAction<PersonControl>((PersonControl discovered) => { discovered.person.Calculate(); });
+            bfs.DiscoverVertex += new VertexAction<PersonControl>((PersonControl discovered) => { discovered.CalculateDisease(); });
+        }
+
+        public void SetTarget(PersonControl p)
+        {
+            dijkstraSP.SetRootVertex(p);
             graph.AddVertex(p);
             target = p;
             bfs.SetRootVertex(p);
-            //bfs.DiscoverVertex += new VertexAction<PersonControl>((PersonControl discovered) => { discovered.person.Calculate(); });
-            bfs.DiscoverVertex += new VertexAction<PersonControl>((PersonControl discovered) => { discovered.CalculateDisease(); });
+            isOpen = true;
+        }
+
+        public void Close()
+        {
+            graph.Clear();
+            bfs.ClearRootVertex();
+            dijkstraSP.ClearRootVertex();
+            target = null;
+            isOpen = false;
         }
 
         public void AddVertex(PersonControl parent, PersonControl child) 

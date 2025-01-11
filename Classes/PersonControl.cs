@@ -175,7 +175,7 @@ namespace DiseaseCalculator.Classes
             SetTop(this, 0);
 
             // наверное тут
-            //diagram.Children.Add(this);
+            diagram.Children.Add(this);
 
             PointCollection quad = new PointCollection();
             quad.Add(new Point(0, 0));
@@ -224,11 +224,9 @@ namespace DiseaseCalculator.Classes
             BtnAddParent_Click(sender, e);
             bool gender = (String)btnAddParentGender.Content == "M"; // true == M
             String name = txtParentName.Text;
-            Point position = new Point(Position.X, Position.Y + 150);
             Person person = new Person(name, gender);
-            PersonControl control = diagram.CreatePersonControl(person);
-            control.Position = position;
-            diagram.AddVertexGraph(control, this);
+            PersonControl control = diagram.CreatePersonControl(person, Position.X, Position.Y + 150);
+            diagram.AddVertex(control, this);
             UpdateLabelsText();
         }
 
@@ -271,7 +269,7 @@ namespace DiseaseCalculator.Classes
             else
                 person.AddHemophilia();
 
-            diagram.RecalculateGraph();
+            diagram.Recalculate();
             UpdateLabelsText();
         }
 
@@ -298,6 +296,8 @@ namespace DiseaseCalculator.Classes
                 labelDisease.Content = "-";
                 labelProb.Content = "-";
             }
+
+            diagram.UpdateFooter();
         }
 
         public void Element_MouseDown(object sender, MouseButtonEventArgs e)

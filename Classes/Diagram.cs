@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows;
+using System.Windows.Media.Imaging;
 
 namespace DiseaseCalculator.Classes
 {
@@ -14,16 +15,21 @@ namespace DiseaseCalculator.Classes
         ScrollViewer vp;
         List<PersonControl> persons;
         List<LineControl> lines;
-        PersonsGraph? graph;
+        Grid container;
+        PersonsGraph graph;
+        TextBox footer;
 
-        public Diagram(double diagramWidth, double diagramHeight, ScrollViewer _vp)
+        public Diagram(Grid _container, ScrollViewer _vp, PersonsGraph _graph, TextBox _footer, double diagramWidth, double diagramHeight)
         {
             Background = (Brush)Application.Current.FindResource("diagramBackgroundCell");
 
             Width = diagramWidth;
             Height = diagramHeight;
 
+            container = _container;
             vp = _vp;
+            graph = _graph;
+            footer = _footer;
 
             Rect viewport = new Rect(0, 0, Width, Height);
             Arrange(viewport);
@@ -33,6 +39,8 @@ namespace DiseaseCalculator.Classes
 
             persons = new List<PersonControl>();
             lines = new List<LineControl>();
+
+            container.Children.Add(this);
         }
 
         public LineControl CreateLineControl(PersonControl _from, PersonControl _to)
@@ -43,11 +51,12 @@ namespace DiseaseCalculator.Classes
             return lc;
         }
 
-        public PersonControl CreatePersonControl(Person person)
+        public PersonControl CreatePersonControl(Person person, double x = 0, double y = 0)
         {
             PersonControl control = new PersonControl(this, person);
+            control.Position = new Point(x, y);
             persons.Add(control);
-            Children.Add(control);
+            //Children.Add(control);
             return control;
         }
 
@@ -69,32 +78,45 @@ namespace DiseaseCalculator.Classes
                 vp.LineUp();
         }
 
-        public void InitializeGraph(PersonsGraph _graph)
-        {
-            graph = _graph;
-        }
-
         // На случай когда control требует перерасчет болезней
-        public void RecalculateGraph()
+        public void Recalculate()
         {
-            if (graph == null)
-                throw new InvalidOperationException("Контролы не знают о существовании графа");
-
             graph.Recalculate();
-
-            //RTVB.Text = "";
-            foreach (var vert in graph.graph.Vertices)
-            {
-                //RTVB.Text += " " + vert.person;
-            }
+            UpdateFooter();
         }
 
-        public void AddVertexGraph(PersonControl parent, PersonControl child)
+        public void AddVertex(PersonControl parent, PersonControl child)
         {
-            if (graph == null)
-                throw new InvalidOperationException("Контролы не знают о существовании графа");
-
             graph.AddVertex(parent, child);
+        }
+
+        public void Close()
+        {
+            graph.Close();
+
+            foreach (var person in persons)
+            {
+                Children.Remove(person);
+            }
+
+            persons.Clear();
+
+            foreach (var line in lines)
+            {
+                Children.Remove(line);  
+            }
+
+            lines.Clear();
+
+            footer.Text = "";
+        }
+
+        public void UpdateFooter()
+        {
+            footer.Text = "";
+
+            foreach (var person in persons)
+                footer.Text += person.Person + " | ";
         }
     }
 }
