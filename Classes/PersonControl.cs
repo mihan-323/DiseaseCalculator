@@ -69,14 +69,14 @@ namespace DiseaseCalculator.Classes
             btnAddDisease.Click += BtnAddDisease_Click;
 
             btnAddParent = new Button();
-            SetupButton(btnAddParent, 25, 25, "+", 75 - 12.5, -25);
+            SetupButton(btnAddParent, 60, 15, "+", 50, 0);
             btnAddParent.Click += BtnAddParent_Click;
 
             labelName = new Label();
-            SetupLabel(labelName, 120, 25, 30, 12.5);
+            SetupLabel(labelName, 120, 25, 30, 15);
             
             labelGender = new Label();
-            SetupLabel(labelGender, 30, 25, 0, 12.5);
+            SetupLabel(labelGender, 30, 25, 0, 15);
 
             labelDisease = new Label();
             SetupLabel(labelDisease, 110, 25, 0, 50, 0, 0, 0, 1);
