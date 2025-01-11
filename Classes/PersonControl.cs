@@ -159,7 +159,7 @@ namespace DiseaseCalculator.Classes
         {
             bool gender = (String)btnAddParentGender.Content == "M"; // true == M
             String name = txtParentName.Text;
-            Point position = new Point(Position.X, Position.Y - 250);
+            Point position = new Point(Position.X, Position.Y + 250);
             Person person = new Person(name, gender);
             PersonControl control = diagram.CreatePersonControl(person);
             control.Position = position;
