@@ -65,6 +65,35 @@ namespace DiseaseCalculator.Classes
             }
         }
 
+        // временное решение как затычка
+        // для проверки работоспособности
+        public bool SearchHemophilia()
+        {
+            return diseases.Count > 0;
+        }
+
+        // временное решение как затычка
+        // для проверки работоспособности
+        public void AddHemophilia()
+        {
+            if (SearchHemophilia())
+                throw new Exception("Болезнь уже добавлена");
+
+            // 100%?
+            diseases.Add(new PersonalDisease(Hemophilia.GetHemophiliaInstance(), true));
+        }
+        
+        // временное решение как затычка
+        // для проверки работоспособности
+        public void RemoveHemophilia()
+        {
+            if (!SearchHemophilia())
+                throw new Exception("Болезнь не найдена");
+
+            // 100%?
+            diseases.Clear();
+        }
+
         public override string ToString()
         {
             string pdiseases = "";

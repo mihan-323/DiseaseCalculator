@@ -27,29 +27,29 @@ namespace DiseaseCalculator
         {
             InitializeComponent();
 
+            // create persons
+            Person vasya = new Person("Вася", true);
+            Person vasya2 = new Person("Вася 2", true);
+            Person vasya3 = new Person("Вася 3", true);
+            Person vasya4 = new Person("Женщина", false);
+            Person vasya5 = new Person("Вася 5", true);
+
+            // add diseases
+            //vasya4.diseases.Add(new PersonalDisease(Hemophilia.GetHemophiliaInstance(), true));
+
             // create diagram
             diagram = new Diagram(1920, 1080, scroll);
             diagramContainer.Children.Add(diagram);
-            
-            // create persons
-            Person vasya = new Person("Вася",true);
+
+            // create controls
             PersonControl cvasya = diagram.CreatePersonControl(vasya);
             cvasya.SetPosition(new Point(500, 400));
-
-            Person vasya2 = new Person("Вася 2", true);
             PersonControl cvasya2 = diagram.CreatePersonControl(vasya2);
             cvasya2.SetPosition(new Point(250, 550));
-
-            Person vasya3 = new Person("Вася 3", true);
             PersonControl cvasya3 = diagram.CreatePersonControl(vasya3);
             cvasya3.SetPosition(new Point(750, 550));
-
-            Person vasya4 = new Person("Женщина", false);
-            vasya4.diseases.Add(new PersonalDisease(Hemophilia.GetHemophiliaInstance(), true));
             PersonControl cvasya4 = diagram.CreatePersonControl(vasya4);
             cvasya4.SetPosition(new Point(500, 550));
-
-            Person vasya5 = new Person("Вася 5", true);
             PersonControl cvasya5 = diagram.CreatePersonControl(vasya5);
             cvasya5.SetPosition(new Point(600, 700));
 
@@ -59,8 +59,10 @@ namespace DiseaseCalculator
             pg.AddVertex(cvasya, cvasya3);
             pg.AddVertex(cvasya, cvasya4);
             pg.AddVertex(cvasya4, cvasya5);
-            pg.Recalculate();
+            diagram.InitializeGraph(pg);
+            diagram.RecalculateGraph();
 
+            // debug
             Person[] pes = new Person[5];
             pes[0]=vasya;
             pes[1]=vasya2;
@@ -72,8 +74,6 @@ namespace DiseaseCalculator
             {
                 RTVB.Text += " " + item;
             }
-
-
         }
     }
 }

@@ -25,6 +25,7 @@ namespace DiseaseCalculator.Classes
         protected Point position;
         public Point Position { get => position; set => SetPosition(value); }
         public TriangleFan shape;
+        Button btnAddDiseaseHemophilia;
 
         void SetupLabel(Label label, double w, double h, 
             double l = 0, double t = 0, double r = 0, double b = 0, int bl = 0, int bt = 0, int br = 0, int bb = 0)
@@ -72,8 +73,13 @@ namespace DiseaseCalculator.Classes
             SetupButton(btnAddParent, 60, 15, "+", 50, 0);
             btnAddParent.Click += BtnAddParent_Click;
 
+            btnAddDiseaseHemophilia = new Button();
+            SetupButton(btnAddDiseaseHemophilia, 100, 25, "Гемофилия", 170);
+            btnAddDiseaseHemophilia.Visibility = Visibility.Collapsed;
+            btnAddDiseaseHemophilia.Click += BtnAddDiseaseHemophilia_Click;
+
             labelName = new Label();
-            SetupLabel(labelName, 120, 25, 30, 15);
+            SetupLabel(labelName, 110, 25, 30, 15);
             
             labelGender = new Label();
             SetupLabel(labelGender, 30, 25, 0, 15);
@@ -110,6 +116,17 @@ namespace DiseaseCalculator.Classes
             UpdateLabelsText();
         }
 
+        private void BtnAddDiseaseHemophilia_Click(object sender, RoutedEventArgs e)
+        {
+            if (person.SearchHemophilia())
+                person.RemoveHemophilia();
+            else
+                person.AddHemophilia();
+
+            diagram.RecalculateGraph();
+            UpdateLabelsText();
+        }
+
         private void BtnAddParent_Click(object sender, RoutedEventArgs e)
         {
             throw new NotImplementedException();
@@ -117,22 +134,26 @@ namespace DiseaseCalculator.Classes
 
         private void BtnAddDisease_Click(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
+            if(btnAddDiseaseHemophilia.Visibility == Visibility.Visible)
+                btnAddDiseaseHemophilia.Visibility = Visibility.Collapsed;
+            else
+                btnAddDiseaseHemophilia.Visibility = Visibility.Visible;
         }
 
         void UpdateLabelsText()
         {
             labelName.Content = person.name;
             labelGender.Content = person.gender ? "M" : "F";
-            labelDisease.Content = "Гемофилия";
 
             if (person.diseases.Count > 0)
             {
+                labelDisease.Content = "Гемофилия";
                 labelProb.Content = person.diseases[0].calculated_probability;
             }
             else
             {
-                labelProb.Content = "Нет";
+                labelDisease.Content = "-";
+                labelProb.Content = "-";
             }
         }
 

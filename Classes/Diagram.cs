@@ -14,6 +14,7 @@ namespace DiseaseCalculator.Classes
         ScrollViewer vp;
         List<PersonControl> persons;
         List<LineControl> lines;
+        PersonsGraph? graph;
 
         public Diagram(double diagramWidth, double diagramHeight, ScrollViewer _vp)
         {
@@ -66,6 +67,20 @@ namespace DiseaseCalculator.Classes
                 vp.LineDown();
             if (control.Position.Y < vp.VerticalOffset)
                 vp.LineUp();
+        }
+
+        public void InitializeGraph(PersonsGraph _graph)
+        {
+            graph = _graph;
+        }
+
+        // На случай когда control требует перерасчет болезней
+        public void RecalculateGraph()
+        {
+            if (graph == null)
+                throw new InvalidOperationException("Контролы не знают о существовании графа");
+
+            graph.Recalculate();
         }
     }
 }
