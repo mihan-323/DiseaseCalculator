@@ -10,7 +10,7 @@ namespace DiseaseCalculator.Classes
 {
     class Person
     {
-        public readonly string name;
+        public string name;
         public readonly bool gender;//true = male
         public Person? mother;
         public Person? father;
@@ -114,6 +114,11 @@ namespace DiseaseCalculator.Classes
             }
 
             return name + " " + (gender ? "M" : "F") + " " + pdiseases;
+        }
+
+        public void ChangeName(String s)
+        {
+            name = s;
         }
     }
 }

@@ -30,6 +30,9 @@ namespace DiseaseCalculator.Classes
         Button btnAddParentGender;
         Button btnAddParentOk;
         Label labelAddParent;
+        TextBox txtChangeName;
+        Label labelChangeName;
+        Button btnChangeNameOk;
 
         Label SetupLabel(double w, double h, String s,
             double l = 0, double t = 0, double r = 0, double b = 0, 
@@ -106,6 +109,19 @@ namespace DiseaseCalculator.Classes
 
             return tb;
         }
+        
+        MenuItem SetupMenu(ItemCollection collection, String s, RoutedEventHandler clck)
+        {
+            MenuItem item = new MenuItem();
+            item.Header = s;
+
+            if(clck != null)
+                item.Click += clck;
+
+            collection.Add(item);
+
+            return item;
+        }
 
         public PersonControl(Diagram _diagram, Person _person)
         {
@@ -117,20 +133,28 @@ namespace DiseaseCalculator.Classes
             Height = 80;
             Background = Brushes.LightGray;
 
-            //----------------------------------------
+            ContextMenu = new ContextMenu();
+
             // добавление родителя
             labelAddParent = SetupLabel(160, 25, "Добавить родителя:", 0, -85, 0, 0, 0, 0, 0, 0, false);
-            txtParentName = SetupTextBox(100, 25, ":name:", 0, -35, 0, 0, false, null);
+            txtParentName = SetupTextBox(100, 25, ":name:", 0, -35, 0, 0, false);
             btnAddParentGender = SetupButton(25, 25, "M", 105, -35, 0, 0, false, BtnAddParentGender_Click);
             btnAddParentOk = SetupButton(25, 25, "Oк", 135, -35, 0, 0, false, BtnAddParentOk_Click);
             btnAddParent = SetupButton(60, 15, "+", 50, 0, 0, 0, true, BtnAddParent_Click);
+            SetupMenu(ContextMenu.Items, "Добавить предка", BtnAddParent_Click);
 
-            //----------------------------------------
             // добавление болезни
             btnAddDiseaseHemophilia = SetupButton(100, 25, "Гемофилия", 170, 0, 0, 0, false, BtnAddDiseaseHemophilia_Click);
             btnAddDisease = SetupButton(25, 25, "+", 135, 12.5, 0, 0, true, BtnAddDisease_Click);
+            SetupMenu(ContextMenu.Items, "Добавить болезнь", BtnAddDisease_Click);
 
-            //----------------------------------------
+            // смена имени
+            labelChangeName = SetupLabel(160, 25, "Сменить имя:", 0, -85, 0, 0, 0, 0, 0, 0, false); // -160
+            txtChangeName = SetupTextBox(130, 25, ":name:", 0, -35, 0, 0, false); // -120
+            btnChangeNameOk = SetupButton(25, 25, "Ок", 135, -35, 0, 0, false, BtnChangeNameOk_Click); // -120
+            SetupMenu(ContextMenu.Items, "Сменить имя", MenuChangeName_Click);
+
+            // основные контролы
             labelName = SetupLabel(110, 25, ":name:", 30, 15);
             labelGender = SetupLabel(30, 25, ":M/F:", 0, 15);
             labelDisease = SetupLabel(110, 25, ":disease:", 0, 50, 0, 0, 0, 1);
@@ -162,6 +186,29 @@ namespace DiseaseCalculator.Classes
             UpdateLabelsText();
         }
 
+        private void MenuChangeName_Click(object sender, RoutedEventArgs e)
+        {
+            if(btnChangeNameOk.Visibility == Visibility.Visible)
+            {
+                labelChangeName.Visibility = Visibility.Collapsed;
+                btnChangeNameOk.Visibility = Visibility.Collapsed;
+                txtChangeName.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                labelChangeName.Visibility = Visibility.Visible;
+                btnChangeNameOk.Visibility = Visibility.Visible;
+                txtChangeName.Visibility = Visibility.Visible;
+            }
+        }
+
+        private void BtnChangeNameOk_Click(object sender, RoutedEventArgs e)
+        {
+            MenuChangeName_Click(sender, e);
+            person.ChangeName(txtChangeName.Text);
+            UpdateLabelsText();
+        }
+
         private void BtnAddParentGender_Click(object sender, RoutedEventArgs e)
         {
             if ((String)btnAddParentGender.Content == "M")
@@ -172,13 +219,15 @@ namespace DiseaseCalculator.Classes
 
         private void BtnAddParentOk_Click(object sender, RoutedEventArgs e)
         {
+            BtnAddParent_Click(sender, e);
             bool gender = (String)btnAddParentGender.Content == "M"; // true == M
             String name = txtParentName.Text;
-            Point position = new Point(Position.X, Position.Y + 250);
+            Point position = new Point(Position.X, Position.Y + 150);
             Person person = new Person(name, gender);
             PersonControl control = diagram.CreatePersonControl(person);
             control.Position = position;
             diagram.AddVertexGraph(control, this);
+            UpdateLabelsText();
         }
 
         private void BtnAddParent_Click(object sender, RoutedEventArgs e)
@@ -189,6 +238,13 @@ namespace DiseaseCalculator.Classes
                 txtParentName.Visibility = Visibility.Collapsed;
                 btnAddParentGender.Visibility = Visibility.Collapsed;
                 btnAddParentOk.Visibility = Visibility.Collapsed;
+
+                labelChangeName.Margin = new Thickness(labelChangeName.Margin.Left, labelChangeName.Margin.Top + 85, 
+                    labelChangeName.Margin.Right, labelChangeName.Margin.Bottom);
+                txtChangeName.Margin = new Thickness(txtChangeName.Margin.Left, txtChangeName.Margin.Top + 85,
+                    txtChangeName.Margin.Right, txtChangeName.Margin.Bottom);
+                btnChangeNameOk.Margin = new Thickness(btnChangeNameOk.Margin.Left, btnChangeNameOk.Margin.Top + 85,
+                    btnChangeNameOk.Margin.Right, btnChangeNameOk.Margin.Bottom);
             }
             else
             {
@@ -196,6 +252,13 @@ namespace DiseaseCalculator.Classes
                 txtParentName.Visibility = Visibility.Visible;
                 btnAddParentGender.Visibility = Visibility.Visible;
                 btnAddParentOk.Visibility = Visibility.Visible;
+
+                labelChangeName.Margin = new Thickness(labelChangeName.Margin.Left, labelChangeName.Margin.Top - 85,
+                    labelChangeName.Margin.Right, labelChangeName.Margin.Bottom);
+                txtChangeName.Margin = new Thickness(txtChangeName.Margin.Left, txtChangeName.Margin.Top - 85,
+                    txtChangeName.Margin.Right, txtChangeName.Margin.Bottom);
+                btnChangeNameOk.Margin = new Thickness(btnChangeNameOk.Margin.Left, btnChangeNameOk.Margin.Top - 85,
+                    btnChangeNameOk.Margin.Right, btnChangeNameOk.Margin.Bottom);
             }
         }
 
