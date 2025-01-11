@@ -7,29 +7,31 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Shapes;
 
 namespace DiseaseCalculator.Classes
 {
     class PersonsGraph
     {
         // надо пересмотреть доступ
-        public AdjacencyGraph<Person, Edge<Person>> graph = new AdjacencyGraph<Person, Edge<Person>>();
-        BreadthFirstSearchAlgorithm<Person, Edge<Person>> bfs;
-        FloydWarshallAllShortestPathAlgorithm<Person, Edge<Person>> floydWarshall;
-        Person target;
+        public AdjacencyGraph<PersonControl, Edge<PersonControl>> graph = new AdjacencyGraph<PersonControl, Edge<PersonControl>>();
+        public BreadthFirstSearchAlgorithm<PersonControl, Edge<PersonControl>> bfs;
+        public FloydWarshallAllShortestPathAlgorithm<PersonControl, Edge<PersonControl>> floydWarshall;
+        public PersonControl target;
         string save_str;
 
-        public PersonsGraph(Person p) 
+        public PersonsGraph(PersonControl p) 
         {
-            bfs = new BreadthFirstSearchAlgorithm<Person, Edge<Person>>(graph);
-            floydWarshall = new FloydWarshallAllShortestPathAlgorithm<Person, Edge<Person>>(graph, double (Edge<Person> t) => { return 1; });
+            bfs = new BreadthFirstSearchAlgorithm<PersonControl, Edge<PersonControl>>(graph);
+            floydWarshall = new FloydWarshallAllShortestPathAlgorithm<PersonControl, Edge<PersonControl>>(graph, double (Edge<PersonControl> t) => { return 1; });
             graph.AddVertex(p);
             target = p;
             bfs.SetRootVertex(p);
-            bfs.DiscoverVertex += new VertexAction<Person>((Person discovered) => { discovered.Calculate(); });
+            //bfs.DiscoverVertex += new VertexAction<PersonControl>((PersonControl discovered) => { discovered.person.Calculate(); });
+            bfs.DiscoverVertex += new VertexAction<PersonControl>((PersonControl discovered) => { discovered.CalculateDisease(); });
         }
 
-        public void AddVertex(Person parent, Person child) 
+        public void AddVertex(PersonControl parent, PersonControl child) 
         {
             if (!graph.Vertices.Contains(child))
             {
@@ -41,15 +43,16 @@ namespace DiseaseCalculator.Classes
                 bfs.SetRootVertex(parent);
             }
 
-            graph.AddEdge(new Edge<Person>(parent, child));
+            graph.AddEdge(new Edge<PersonControl>(parent, child));
+            child.AddLine(parent);
 
-            if (parent.gender)
+            if (parent.person.gender)
             {
-                child.father = parent;
+                child.person.father = parent.person;
             }
             else
             {
-                child.mother = parent;
+                child.person.mother = parent.person;
             }
         }
 
@@ -57,8 +60,8 @@ namespace DiseaseCalculator.Classes
         {
             double tmp, maxdist;
             tmp = maxdist = 0;
-            Person hiParent = target;
-            foreach (Person vertex in graph.Vertices) 
+            PersonControl hiParent = target;
+            foreach (PersonControl vertex in graph.Vertices) 
             {
                 if (floydWarshall.TryGetDistance(target, vertex, out tmp))
                 {

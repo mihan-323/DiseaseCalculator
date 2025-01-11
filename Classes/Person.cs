@@ -12,8 +12,8 @@ namespace DiseaseCalculator.Classes
     {
         public readonly string name;
         public readonly bool gender;//true = male
-        public Person mother;
-        public Person father;
+        public Person? mother;
+        public Person? father;
         public List<PersonalDisease> diseases = new List<PersonalDisease>();
 
         public Person(string name, bool gender)

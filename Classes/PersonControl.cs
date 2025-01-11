@@ -7,6 +7,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Shapes;
 
 namespace DiseaseCalculator.Classes
 {
@@ -15,14 +16,33 @@ namespace DiseaseCalculator.Classes
         Button diseases;
         Button parents;
         //TextBox textbox;
-        Label textbox;
-        Label labelDisease, labelLuck;
+        Label labelName, labelGender;
+        Label labelDisease, labelProb;
         public readonly Person person;
         Diagram diagram;
         protected Point pos_old, mouse_old;
         private bool isMoving;
         protected Point position;
         public Point Position { get => position; set => SetPosition(value); }
+        public TriangleFan shape;
+
+        void SetupLabel(Label label, double w, double h, 
+            double l = 0, double r = 0, double t = 0, double b = 0, int bl = 0, int bt = 0, int br = 0, int bb = 0)
+        {
+            label.Width = w;
+            label.Height = h;
+            label.Margin = new Thickness(l, r, t, b);
+            label.Content = "test";
+            label.BorderBrush = Brushes.Transparent;
+
+            if(bl > 0 || bt > 0 || br > 0 || bb > 0)
+            {
+                label.BorderBrush = Brushes.Black;
+                label.BorderThickness = new Thickness(bl, bt, br, bb);
+            }
+
+            Children.Add(label);
+        }
 
         public PersonControl(Diagram _diagram, Person _person)
         {
@@ -48,35 +68,17 @@ namespace DiseaseCalculator.Classes
             parents.Margin = new Thickness(75 - 12.5, -25, 0, 0);
             Children.Add(parents);
 
-            //textbox = new TextBox();
-            textbox = new Label();
-            textbox.Width = 150;
-            textbox.Height = 25;
-            textbox.Margin = new Thickness(0, 12.5, 0, 0);
-            //textbox.Text = person.name;
-            textbox.Content = person.name;
-            textbox.BorderBrush = Brushes.Transparent;
-            Children.Add(textbox);
+            labelName = new Label();
+            SetupLabel(labelName, 120, 25, 30, 12.5);
+            
+            labelGender = new Label();
+            SetupLabel(labelGender, 30, 25, 0, 12.5);
 
             labelDisease = new Label();
-            labelDisease.Content = "Гемофилия";
-            labelDisease.Width = 110;
-            labelDisease.Height = 25;
-            labelDisease.Background = Brushes.LightGray;
-            labelDisease.Margin = new Thickness(0, 50, 0, 0);
-            labelDisease.BorderBrush = Brushes.Black;
-            labelDisease.BorderThickness = new Thickness(0, 1, 0, 0);
-            Children.Add(labelDisease);
+            SetupLabel(labelDisease, 110, 25, 0, 50, 0, 0, 0, 1);
 
-            labelLuck = new Label();
-            labelLuck.Content = "100%";
-            labelLuck.Width = 50;
-            labelLuck.Height = 30;
-            labelLuck.Background = Brushes.LightGreen;
-            labelLuck.Margin = new Thickness(110, 50, 0, 0);
-            labelLuck.BorderBrush = Brushes.Black;
-            labelLuck.BorderThickness = new Thickness(0, 1, 0, 0);
-            Children.Add(labelLuck);
+            labelProb = new Label();
+            SetupLabel(labelProb, 50, 30, 110, 50, 0, 0, 0, 1);
 
             // cut me
             SetTop(this, 25);
@@ -92,7 +94,34 @@ namespace DiseaseCalculator.Classes
 
             // наверное тут
             diagram.Children.Add(this);
+
+            PointCollection quad = new PointCollection();
+            quad.Add(new Point(0, 0));
+            quad.Add(new Point(160, 0));
+            quad.Add(new Point(160, 80));
+            quad.Add(new Point(0, 80));
+
+            shape = TriangleFan.CreateTriangleFan(quad, 2, 2);
+
+            UpdateLabelsText();
         }
+
+        void UpdateLabelsText()
+        {
+            labelName.Content = person.name;
+            labelGender.Content = person.gender ? "M" : "F";
+            labelDisease.Content = "Гемофилия";
+
+            if (person.diseases.Count > 0)
+            {
+                labelProb.Content = person.diseases[0].calculated_probability;
+            }
+            else
+            {
+                labelProb.Content = "Нет";
+            }
+        }
+
         public void Element_MouseDown(object sender, MouseButtonEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Pressed)
@@ -115,16 +144,11 @@ namespace DiseaseCalculator.Classes
                 Vector offset = e.GetPosition(diagram) - mouse_old;
                 Point pos = pos_old + offset;
 
-                if (pos.X > diagram.vp.ActualWidth + diagram.vp.HorizontalOffset - this.Width)
-                    diagram.vp.LineRight();
-                if (pos.X < diagram.vp.HorizontalOffset)
-                    diagram.vp.LineLeft();
-                if (pos.Y > diagram.vp.ActualHeight + diagram.vp.VerticalOffset - this.Height)
-                    diagram.vp.LineDown();
-                if (pos.Y < diagram.vp.VerticalOffset)
-                    diagram.vp.LineUp();
+                diagram.UpdateVP(this);
 
                 SetPosition(pos);
+
+                diagram.UpdateLines();
 
                 return;
             }
@@ -147,5 +171,23 @@ namespace DiseaseCalculator.Classes
             SetTop(this, P.Y);
         }
 
+        public Point Center()
+        {
+            Point pos = Position;
+            pos.X += this.Width * 0.5;
+            pos.Y += this.Height * 0.5;
+            return pos;
+        }
+
+        public void AddLine(PersonControl _to)
+        {
+            diagram.AddLine(this, _to);
+        }
+
+        public void CalculateDisease()
+        {
+            person.Calculate();
+            UpdateLabelsText();
+        }
     }
 }
