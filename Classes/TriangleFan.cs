@@ -12,7 +12,8 @@ namespace DiseaseCalculator.Classes
     public class TriangleFan
     {
         public PointCollection points;
-        public PointCollection collision;
+        public PointCollection pointsAdditional;
+        public PointCollection pointsTesstlated;
 
         static public double Distance(Point x, Point to)
         {
@@ -24,19 +25,18 @@ namespace DiseaseCalculator.Classes
             return new Point(x.X * fraction + to.X * (1.0 - fraction), x.Y * fraction + to.Y * (1.0 - fraction));
         }
 
-        public TriangleFan(PointCollection pointsFan, int maxTessLevel, double minTessDist)
+        public TriangleFan(PointCollection pointsFan, int maxTessLevel, int minDistPixels = 1)
         {
             PointCollection collision = new PointCollection();
+            PointCollection append = new PointCollection();
 
             for (int i = 0; i < pointsFan.Count; i++)
             {
                 Point currPoint = pointsFan[i];
                 Point nextPoint = pointsFan[(i + 1) % pointsFan.Count];
 
-                collision.Add(currPoint);
-
                 double dist = Distance(currPoint, nextPoint);
-                int currTessLevel = (int)(dist / minTessDist + 0.5);
+                int currTessLevel = (int)(dist / minDistPixels + 0.5);
 
                 if (currTessLevel > maxTessLevel)
                     currTessLevel = maxTessLevel;
@@ -46,9 +46,10 @@ namespace DiseaseCalculator.Classes
                     double tessDist = (double)j / currTessLevel;
                     Point tessPoint = Subdivide(currPoint, nextPoint, tessDist);
                     collision.Add(tessPoint);
-                }
 
-                collision.Add(nextPoint);
+                    if(tessPoint != nextPoint)
+                        append.Add(tessPoint);
+                }
             }
 
             Polyline polyline = new Polyline();
@@ -80,8 +81,9 @@ namespace DiseaseCalculator.Classes
             for(int i = 0; i < vertCount; i++)
                 polygon.Points.Add(pointsFan[indices[i]]);
 
-            this.points = pointsFan;
-            this.collision = collision;
+            points = pointsFan;
+            pointsTesstlated = collision;
+            pointsAdditional = append;
         }
     }
 }
