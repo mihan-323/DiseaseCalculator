@@ -81,6 +81,12 @@ namespace DiseaseCalculator.Classes
                 throw new InvalidOperationException("Контролы не знают о существовании графа");
 
             graph.Recalculate();
+
+            //RTVB.Text = "";
+            foreach (var vert in graph.graph.Vertices)
+            {
+                //RTVB.Text += " " + vert.person;
+            }
         }
 
         public void AddVertexGraph(PersonControl parent, PersonControl child)

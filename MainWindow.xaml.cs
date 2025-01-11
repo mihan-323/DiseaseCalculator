@@ -28,52 +28,47 @@ namespace DiseaseCalculator
             InitializeComponent();
 
             // create persons
-            Person vasya = new Person("Вася", true);
-            Person vasya2 = new Person("Вася 2", true);
-            Person vasya3 = new Person("Вася 3", true);
-            Person vasya4 = new Person("Женщина", false);
-            Person vasya5 = new Person("Вася 5", true);
+            Person alexey_1 = new Person("Алексей", true);
+            Person alexandra_2 = new Person("Александра", false);
+            Person nikolayII_3 = new Person("Николай II", true);
+            Person ludvig_4 = new Person("Людвиг", true);
+            Person alisa_5 = new Person("Алиса", false);
+            Person albert_6 = new Person("Альберт", true);
+            Person victoria_7 = new Person("Виктория", false);
 
             // add diseases
-            //vasya4.diseases.Add(new PersonalDisease(Hemophilia.GetHemophiliaInstance(), true));
+            //victoria_7.diseases.Add(new PersonalDisease(Hemophilia.GetHemophiliaInstance(), false));
 
             // create diagram
             diagram = new Diagram(1920, 1080, scroll);
             diagramContainer.Children.Add(diagram);
 
             // create controls
-            PersonControl cvasya = diagram.CreatePersonControl(vasya);
-            cvasya.SetPosition(new Point(500, 400));
-            PersonControl cvasya2 = diagram.CreatePersonControl(vasya2);
-            cvasya2.SetPosition(new Point(250, 550));
-            PersonControl cvasya3 = diagram.CreatePersonControl(vasya3);
-            cvasya3.SetPosition(new Point(750, 550));
-            PersonControl cvasya4 = diagram.CreatePersonControl(vasya4);
-            cvasya4.SetPosition(new Point(500, 550));
-            PersonControl cvasya5 = diagram.CreatePersonControl(vasya5);
-            cvasya5.SetPosition(new Point(600, 700));
+            PersonControl c_alexe = diagram.CreatePersonControl(alexey_1);
+            c_alexe.SetPosition(new Point(300, 50));
+            PersonControl c_alexa = diagram.CreatePersonControl(alexandra_2);
+            c_alexa.SetPosition(new Point(150, 250));
+            PersonControl c_nikol = diagram.CreatePersonControl(nikolayII_3);
+            c_nikol.SetPosition(new Point(400, 250));
+            PersonControl c_ludvi = diagram.CreatePersonControl(ludvig_4);
+            c_ludvi.SetPosition(new Point(150, 450));
+            PersonControl c_alisa = diagram.CreatePersonControl(alisa_5);
+            c_alisa.SetPosition(new Point(400, 450));
+            PersonControl c_alber = diagram.CreatePersonControl(albert_6);
+            c_alber.SetPosition(new Point(150, 650));
+            PersonControl c_victo = diagram.CreatePersonControl(victoria_7);
+            c_victo.SetPosition(new Point(400, 650));
 
             // create graph
-            PersonsGraph pg = new PersonsGraph(cvasya);
-            pg.AddVertex(cvasya, cvasya2);
-            pg.AddVertex(cvasya, cvasya3);
-            pg.AddVertex(cvasya, cvasya4);
-            pg.AddVertex(cvasya4, cvasya5);
+            PersonsGraph pg = new PersonsGraph(c_alexe);
+            pg.AddVertex(c_alexa, c_alexe);
+            pg.AddVertex(c_nikol, c_alexe);
+            pg.AddVertex(c_ludvi, c_alexa);
+            pg.AddVertex(c_alisa, c_alexa);
+            pg.AddVertex(c_alber, c_alisa);
+            pg.AddVertex(c_victo, c_alisa);
             diagram.InitializeGraph(pg);
             diagram.RecalculateGraph();
-
-            // debug
-            Person[] pes = new Person[5];
-            pes[0]=vasya;
-            pes[1]=vasya2;
-            pes[2]=vasya3;
-            pes[3]=vasya4;
-            pes[4]=vasya5;
-
-            foreach (var item in pes)
-            {
-                RTVB.Text += " " + item;
-            }
         }
     }
 }

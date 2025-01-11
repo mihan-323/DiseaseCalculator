@@ -1,5 +1,6 @@
 ﻿using QuikGraph;
 using QuikGraph.Algorithms.Observers;
+using QuikGraph.Algorithms.RankedShortestPath;
 using QuikGraph.Algorithms.Search;
 using QuikGraph.Algorithms.ShortestPath;
 using System;
@@ -16,14 +17,19 @@ namespace DiseaseCalculator.Classes
         // надо пересмотреть доступ
         public AdjacencyGraph<PersonControl, Edge<PersonControl>> graph = new AdjacencyGraph<PersonControl, Edge<PersonControl>>();
         public BreadthFirstSearchAlgorithm<PersonControl, Edge<PersonControl>> bfs;
-        public FloydWarshallAllShortestPathAlgorithm<PersonControl, Edge<PersonControl>> floydWarshall;
+
+        public DijkstraShortestPathAlgorithm<PersonControl, Edge<PersonControl>> dijkstraSP;
+
         public PersonControl target;
         string save_str;
 
         public PersonsGraph(PersonControl p) 
         {
             bfs = new BreadthFirstSearchAlgorithm<PersonControl, Edge<PersonControl>>(graph);
-            floydWarshall = new FloydWarshallAllShortestPathAlgorithm<PersonControl, Edge<PersonControl>>(graph, double (Edge<PersonControl> t) => { return 1; });
+
+            dijkstraSP = new DijkstraShortestPathAlgorithm<PersonControl, Edge<PersonControl>>(graph, double (Edge<PersonControl> t) => { return 1; });
+            dijkstraSP.SetRootVertex(p);
+
             graph.AddVertex(p);
             target = p;
             bfs.SetRootVertex(p);
@@ -66,15 +72,17 @@ namespace DiseaseCalculator.Classes
             double tmp, maxdist;
             tmp = maxdist = 0;
             PersonControl hiParent = target;
+
+            dijkstraSP.SetRootVertex(target);
+            dijkstraSP.Compute();
+
             foreach (PersonControl vertex in graph.Vertices) 
             {
-                if (floydWarshall.TryGetDistance(target, vertex, out tmp))
+                tmp = dijkstraSP.GetDistance(vertex);
+                if (tmp >= maxdist)
                 {
-                    if (tmp > maxdist)
-                    {
-                        maxdist = tmp;
-                        hiParent = vertex;
-                    }
+                    maxdist = tmp;
+                    hiParent = vertex;
                 }
             }
 

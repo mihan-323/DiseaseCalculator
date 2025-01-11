@@ -60,6 +60,10 @@ namespace DiseaseCalculator.Classes
                 
                 if (prob > 0.0001f)
                 {
+                    if (prob > 1)
+                    {
+                        prob = 0.99f;
+                    }
                     diseases.Add(new PersonalDisease(Hemophilia.GetHemophiliaInstance(), prob));
                 }
             }
