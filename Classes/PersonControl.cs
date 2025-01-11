@@ -13,8 +13,8 @@ namespace DiseaseCalculator.Classes
 {
     class PersonControl : Canvas
     {
-        Button diseases;
-        Button parents;
+        Button btnAddDisease;
+        Button btnAddParent;
         //TextBox textbox;
         Label labelName, labelGender;
         Label labelDisease, labelProb;
@@ -27,11 +27,11 @@ namespace DiseaseCalculator.Classes
         public TriangleFan shape;
 
         void SetupLabel(Label label, double w, double h, 
-            double l = 0, double r = 0, double t = 0, double b = 0, int bl = 0, int bt = 0, int br = 0, int bb = 0)
+            double l = 0, double t = 0, double r = 0, double b = 0, int bl = 0, int bt = 0, int br = 0, int bb = 0)
         {
             label.Width = w;
             label.Height = h;
-            label.Margin = new Thickness(l, r, t, b);
+            label.Margin = new Thickness(l, t, r, b);
             label.Content = "test";
             label.BorderBrush = Brushes.Transparent;
 
@@ -42,6 +42,16 @@ namespace DiseaseCalculator.Classes
             }
 
             Children.Add(label);
+        }
+        
+        void SetupButton(Button btn, double w, double h, string s,
+            double l = 0, double t = 0, double r = 0, double b = 0)
+        {
+            btn.Content = s;
+            btn.Width = w;
+            btn.Height = h;
+            btn.Margin = new Thickness(l, t, r, b);
+            Children.Add(btn);
         }
 
         public PersonControl(Diagram _diagram, Person _person)
@@ -54,19 +64,13 @@ namespace DiseaseCalculator.Classes
             Height = 80;
             Background = Brushes.LightGray;
 
-            diseases = new Button();
-            diseases.Content = "+";
-            diseases.Width = 25;
-            diseases.Height = 25;
-            diseases.Margin = new Thickness(150, 12.5, 0, 0);
-            Children.Add(diseases);
+            btnAddDisease = new Button();
+            SetupButton(btnAddDisease, 25, 25, "+", 135, 12.5);
+            btnAddDisease.Click += BtnAddDisease_Click;
 
-            parents = new Button();
-            parents.Content = "+";
-            parents.Width = 25;
-            parents.Height = 25;
-            parents.Margin = new Thickness(75 - 12.5, -25, 0, 0);
-            Children.Add(parents);
+            btnAddParent = new Button();
+            SetupButton(btnAddParent, 25, 25, "+", 75 - 12.5, -25);
+            btnAddParent.Click += BtnAddParent_Click;
 
             labelName = new Label();
             SetupLabel(labelName, 120, 25, 30, 12.5);
@@ -104,6 +108,16 @@ namespace DiseaseCalculator.Classes
             shape = TriangleFan.CreateTriangleFan(quad, 2, 2);
 
             UpdateLabelsText();
+        }
+
+        private void BtnAddParent_Click(object sender, RoutedEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void BtnAddDisease_Click(object sender, RoutedEventArgs e)
+        {
+            throw new NotImplementedException();
         }
 
         void UpdateLabelsText()
