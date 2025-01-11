@@ -97,7 +97,7 @@ namespace DiseaseCalculator.Classes
             SetTop(this, 0);
 
             // наверное тут
-            diagram.Children.Add(this);
+            //diagram.Children.Add(this);
 
             PointCollection quad = new PointCollection();
             quad.Add(new Point(0, 0));
