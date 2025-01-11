@@ -34,11 +34,20 @@ namespace DiseaseCalculator.Classes
             lines = new List<LineControl>();
         }
 
-        public void AddLine(PersonControl _from, PersonControl _to)
+        public LineControl CreateLineControl(PersonControl _from, PersonControl _to)
         {
             LineControl lc = new LineControl(_from, _to);
             Children.Add(lc);
             lines.Add(lc);
+            return lc;
+        }
+
+        public PersonControl CreatePersonControl(Person person)
+        {
+            PersonControl control = new PersonControl(this, person);
+            persons.Add(control);
+            Children.Add(control);
+            return control;
         }
 
         public void UpdateLines()

@@ -195,7 +195,7 @@ namespace DiseaseCalculator.Classes
 
         public void AddLine(PersonControl _to)
         {
-            diagram.AddLine(this, _to);
+            diagram.CreateLineControl(this, _to);
         }
 
         public void CalculateDisease()

@@ -33,24 +33,24 @@ namespace DiseaseCalculator
             
             // create persons
             Person vasya = new Person("Вася",true);
-            PersonControl cvasya = new PersonControl(diagram, vasya);
+            PersonControl cvasya = diagram.CreatePersonControl(vasya);
             cvasya.SetPosition(new Point(500, 400));
 
             Person vasya2 = new Person("Вася 2", true);
-            PersonControl cvasya2 = new PersonControl(diagram, vasya2);
+            PersonControl cvasya2 = diagram.CreatePersonControl(vasya2);
             cvasya2.SetPosition(new Point(250, 550));
 
             Person vasya3 = new Person("Вася 3", true);
-            PersonControl cvasya3 = new PersonControl(diagram, vasya3);
+            PersonControl cvasya3 = diagram.CreatePersonControl(vasya3);
             cvasya3.SetPosition(new Point(750, 550));
 
             Person vasya4 = new Person("Женщина", false);
             vasya4.diseases.Add(new PersonalDisease(Hemophilia.GetHemophiliaInstance(), true));
-            PersonControl cvasya4 = new PersonControl(diagram, vasya4);
+            PersonControl cvasya4 = diagram.CreatePersonControl(vasya4);
             cvasya4.SetPosition(new Point(500, 550));
 
             Person vasya5 = new Person("Вася 5", true);
-            PersonControl cvasya5 = new PersonControl(diagram, vasya5);
+            PersonControl cvasya5 = diagram.CreatePersonControl(vasya5);
             cvasya5.SetPosition(new Point(600, 700));
 
             // create graph
