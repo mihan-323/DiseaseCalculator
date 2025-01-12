@@ -45,8 +45,14 @@ namespace DiseaseCalculator.Classes
             last = null;
 
             MouseDown += Diagram_MouseDown;
+            MouseMove += Diagram_MouseMove;
 
             container.Children.Add(this);
+
+        }
+
+        private void Diagram_MouseMove(object sender, MouseEventArgs e)
+        {
         }
 
         private void Diagram_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)

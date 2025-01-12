@@ -9,7 +9,7 @@ using System.Windows.Media;
 using System.Windows.Shapes;
 
 namespace DiseaseCalculator.Classes
-{
+{ 
     internal class LineControl : Canvas
     {
         Line lineGraphic;
@@ -34,7 +34,7 @@ namespace DiseaseCalculator.Classes
         public Point CalculateCollision(PersonControl from, Point to)
         {
             Point p = from.Position;
-            double d = 9999999;
+            double d = Double.MaxValue;
             int k = 0;
 
             for (int i = 0; i < from.Collision.Count; i++)

@@ -42,7 +42,7 @@ namespace DiseaseCalculator.Classes
             pointsTesstlated = new PointCollection();
             pointsAdditional = new PointCollection();
 
-            // generate collision points
+            // subdivide points
             for (int i = 0; i < pointsFan.Count; i++)
             {
                 Point currPoint = pointsFan[i];
