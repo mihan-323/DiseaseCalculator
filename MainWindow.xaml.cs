@@ -98,7 +98,8 @@ namespace DiseaseCalculator
 
             if (dialog.ShowDialog() == true)
             {
-                RenderTargetBitmap target = new RenderTargetBitmap((int)diagram.Width, (int)diagram.Height, 96, 96, PixelFormats.Default);
+                RenderTargetBitmap target = new RenderTargetBitmap((int)diagram.Width,
+                    (int)diagram.Height, 96, 96, PixelFormats.Default);
                 target.Render(diagramContainer);
 
                 BitmapEncoder encoder = new JpegBitmapEncoder();

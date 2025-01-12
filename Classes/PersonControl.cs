@@ -32,7 +32,7 @@ namespace DiseaseCalculator.Classes
         Label labelChangeName;
         Button btnChangeNameOk;
 
-        public PointCollection Collision { get => shape.pointsTesstlated; }
+        public PointCollection Collision { get => shape.PointsTesselated; }
         public Point Position { get => position; set => SetPosition(value); }
         public Person Person { get => person; }
 
@@ -184,6 +184,7 @@ namespace DiseaseCalculator.Classes
             quad.Add(new Point(0, 80));
 
             shape = new TriangleFan(quad, 2);
+            Children.Add(shape.Polyline); // рамка
 
             UpdateLabelsText();
         }

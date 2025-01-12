@@ -1,7 +1,8 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
-    <DrawingBrush x:Key="diagramBackgroundCell" Viewport="0,0,20,20" ViewportUnits="Absolute" TileMode="Tile" Opacity="1">
+    <DrawingBrush x:Key="diagramBackgroundCell" Viewport="0,0,20,20" 
+                  ViewportUnits="Absolute" TileMode="Tile" Opacity="1">
         <DrawingBrush.Drawing>
             <GeometryDrawing>
                 <GeometryDrawing.Geometry>
