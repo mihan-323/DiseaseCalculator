@@ -22,8 +22,7 @@ namespace DiseaseCalculator.Classes
         public PointCollection PointsTesselated { get => pointsTesstlated; }
         public PointCollection PointsAdditional { get => pointsAdditional; }
         public Polygon Polygon { get => polygon; }
-        public Polyline Polyline { get => polyline; }
-
+        public Polyline Border { get => polyline; }
 
         // Длина отрезка
         static public double Distance(Point x, Point to)

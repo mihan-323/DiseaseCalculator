@@ -184,7 +184,7 @@ namespace DiseaseCalculator.Classes
             quad.Add(new Point(0, 80));
 
             shape = new TriangleFan(quad, 2);
-            Children.Add(shape.Polyline); // рамка
+            Children.Add(shape.Border); // рамка
 
             UpdateLabelsText();
         }
@@ -319,6 +319,7 @@ namespace DiseaseCalculator.Classes
                 pos_old = Position;
                 CaptureMouse();
                 isMoving = true;
+                diagram.SetFocus(this);
                 return;
             }
         }
@@ -377,6 +378,14 @@ namespace DiseaseCalculator.Classes
         {
             person.Calculate();
             UpdateLabelsText();
+        }
+
+        public void SetBorderStyle(bool selected)
+        {
+            if (selected)
+                shape.Border.Stroke = Brushes.IndianRed;
+            else
+                shape.Border.Stroke = Brushes.Black;
         }
     }
 }

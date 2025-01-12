@@ -18,6 +18,7 @@ namespace DiseaseCalculator.Classes
         Grid container;
         PersonsGraph graph;
         TextBlock footer;
+        PersonControl? last; // focus
 
         public Diagram(Grid _container, ScrollViewer _vp, PersonsGraph _graph, TextBlock _footer, double diagramWidth, double diagramHeight)
         {
@@ -40,7 +41,27 @@ namespace DiseaseCalculator.Classes
             persons = new List<PersonControl>();
             lines = new List<LineControl>();
 
+            last = null;
+
+            MouseDown += Diagram_MouseDown;
+
             container.Children.Add(this);
+        }
+
+        private void Diagram_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+
+        }
+
+        public void SetFocus(PersonControl? next)
+        {
+            if (last != null)
+                last.SetBorderStyle(false);
+
+            if (next != null)
+                next.SetBorderStyle(true);
+
+            last = next;
         }
 
         public LineControl CreateLineControl(PersonControl _from, PersonControl _to)
