@@ -7,6 +7,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows;
 using System.Windows.Media.Imaging;
+using System.Windows.Input;
 
 namespace DiseaseCalculator.Classes
 {
@@ -50,7 +51,13 @@ namespace DiseaseCalculator.Classes
 
         private void Diagram_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
+            if (e.RightButton == MouseButtonState.Pressed)
+            {
+                if (last != null)
+                    last.SetBorderStyle(false);
 
+                last = null;
+            }
         }
 
         public void SetFocus(PersonControl? next)
