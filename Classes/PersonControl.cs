@@ -298,6 +298,9 @@ namespace DiseaseCalculator.Classes
                     labelProb.Background = Brushes.LightYellow;
                 else 
                     labelProb.Background = Brushes.IndianRed;
+
+                if (person.diseases[0].is_ill)
+                    labelProb.Content = "Болен";
             }
             else
             {
