@@ -39,6 +39,7 @@
                 <MenuItem x:Name="graphClose" Header="Закрыть" Click="GraphClose" IsEnabled="False"></MenuItem>
             </MenuItem>
             <MenuItem Header="Доп. вывод" Click="ShowFooter"></MenuItem>
+            <MenuItem Header="Доп. стрелки" Click="ShowArrows"></MenuItem>
         </Menu>
         <Grid Grid.Row="1" x:Name="mainContainer">
             <Grid.ColumnDefinitions>

@@ -20,6 +20,7 @@ namespace DiseaseCalculator.Classes
         PersonsGraph graph;
         TextBlock footer;
         PersonControl? last; // focus
+        bool showArrows = false;
 
         public Diagram(Grid _container, ScrollViewer _vp, PersonsGraph _graph, TextBlock _footer, double diagramWidth, double diagramHeight)
         {
@@ -97,7 +98,10 @@ namespace DiseaseCalculator.Classes
         public void UpdateLines()
         {
             foreach(LineControl lc in lines)
+            {
                 lc.Update();
+                lc.Show(true, showArrows, showArrows);
+            }
         }
 
         public void UpdateVP(PersonControl control)
@@ -153,6 +157,12 @@ namespace DiseaseCalculator.Classes
             {
                 footer.Text += person.Person + "\n";
             }
+        }
+
+        public void ShowArrows(bool show)
+        {
+            showArrows = show;
+            UpdateLines();
         }
     }
 }

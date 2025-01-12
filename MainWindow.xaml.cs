@@ -139,12 +139,41 @@ namespace DiseaseCalculator
 
         private void ShowFooter(object sender, RoutedEventArgs e)
         {
-            double width = footerContainerDef.Width.Value;
+            MenuItem? item = sender as MenuItem;
 
-            if (width > 0)
-                footerContainerDef.Width = new GridLength(0);
-            else
-                footerContainerDef.Width = new GridLength(170);
+            if (item != null)
+            {
+
+                if (item.Background == Brushes.LightGray)
+                {
+                    footerContainerDef.Width = new GridLength(0);
+                    item.Background = Brushes.Transparent;
+                }
+                else
+                {
+                    footerContainerDef.Width = new GridLength(170);
+                    item.Background = Brushes.LightGray;
+                }
+            }
+        }
+
+        private void ShowArrows(object sender, RoutedEventArgs e)
+        {
+            MenuItem? item = sender as MenuItem;
+
+            if (item != null)
+            {
+                if (item.Background == Brushes.LightGray)
+                {
+                    item.Background = Brushes.Transparent;
+                    diagram.ShowArrows(false);
+                }
+                else
+                {
+                    item.Background = Brushes.LightGray;
+                    diagram.ShowArrows(true);
+                }
+            }
         }
     }
 }
