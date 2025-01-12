@@ -81,6 +81,7 @@ namespace DiseaseCalculator.Classes
         public LineControl CreateLineControl(PersonControl _from, PersonControl _to)
         {
             LineControl lc = new LineControl(_from, _to);
+            lc.Show(true, showArrows, showArrows);
             Children.Add(lc);
             lines.Add(lc);
             return lc;

@@ -35,7 +35,6 @@ namespace DiseaseCalculator.Classes
             textGraphic.Text = _to.Person.gender ? "Отец" : "Мать";
             textGraphic.FontSize = 12;
             Update();
-            Show(true, false, false);
             Children.Add(lineGraphic);
             Children.Add(arrowGraphic);
             Children.Add(textGraphic);
