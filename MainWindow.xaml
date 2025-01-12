@@ -24,7 +24,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="25"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
-            <RowDefinition Height="25"></RowDefinition>
+            <!--<RowDefinition Height="25"></RowDefinition>-->
         </Grid.RowDefinitions>
         <Menu x:Name="mainMenu">
             <MenuItem Header="Файл">
@@ -38,12 +38,18 @@
                 </MenuItem>
                 <MenuItem x:Name="graphClose" Header="Закрыть" Click="GraphClose" IsEnabled="False"></MenuItem>
             </MenuItem>
+            <MenuItem Header="Доп. вывод" Click="ShowFooter"></MenuItem>
         </Menu>
-        <Grid Grid.Row="1">
-            <ScrollViewer x:Name="scroll" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+        <Grid Grid.Row="1" x:Name="mainContainer">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition x:Name="footerContainerDef" Width="0"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <ScrollViewer Grid.Column="0" x:Name="scroll" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
                 <Grid x:Name="diagramContainer" Background="White"/>
             </ScrollViewer>
+            <TextBlock Grid.Column="1" x:Name="footer"/>
         </Grid>
-        <TextBox Grid.Row="2" x:Name="footer"/>
+        <!--<TextBox Grid.Row="2" x:Name="footer"/>-->
     </Grid>
 </Window>

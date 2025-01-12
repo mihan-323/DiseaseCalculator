@@ -61,7 +61,7 @@ namespace DiseaseCalculator.Classes
 
         public override string ToString()
         {
-            return disease_type.ToString() + " " + (is_ill ? "болен" : "предрасположен");
+            return disease_type.ToString() + " : " + (is_ill ? "болен" : "пред.");
         }
 
         public bool Equals(PersonalDisease obj)

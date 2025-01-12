@@ -17,9 +17,9 @@ namespace DiseaseCalculator.Classes
         List<LineControl> lines;
         Grid container;
         PersonsGraph graph;
-        TextBox footer;
+        TextBlock footer;
 
-        public Diagram(Grid _container, ScrollViewer _vp, PersonsGraph _graph, TextBox _footer, double diagramWidth, double diagramHeight)
+        public Diagram(Grid _container, ScrollViewer _vp, PersonsGraph _graph, TextBlock _footer, double diagramWidth, double diagramHeight)
         {
             Background = (Brush)Application.Current.FindResource("diagramBackgroundCell");
 
@@ -116,7 +116,9 @@ namespace DiseaseCalculator.Classes
             footer.Text = "";
 
             foreach (var person in persons)
-                footer.Text += person.Person + " | ";
+            {
+                footer.Text += person.Person + "\n";
+            }
         }
     }
 }

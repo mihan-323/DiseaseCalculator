@@ -105,15 +105,15 @@ namespace DiseaseCalculator.Classes
             {
                 foreach (var item in diseases)
                 {
-                    pdiseases += item.ToString();
+                    pdiseases += "\n  " + item.ToString() + " (" + item.calculated_probability + ")";
                 }
             }
             else
             {
-                pdiseases = "здоров";
+                pdiseases = "\n  Здоров";
             }
 
-            return name + " " + (gender ? "M" : "F") + " " + pdiseases;
+            return (gender ? "(М)" : "(Ж)") + " " + name + ":" + pdiseases;
         }
 
         public void ChangeName(String s)

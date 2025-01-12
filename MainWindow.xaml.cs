@@ -136,5 +136,15 @@ namespace DiseaseCalculator
                 graphClose.IsEnabled = false;
             }
         }
+
+        private void ShowFooter(object sender, RoutedEventArgs e)
+        {
+            double width = footerContainerDef.Width.Value;
+
+            if (width > 0)
+                footerContainerDef.Width = new GridLength(0);
+            else
+                footerContainerDef.Width = new GridLength(170);
+        }
     }
 }
