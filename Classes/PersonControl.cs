@@ -291,6 +291,13 @@ namespace DiseaseCalculator.Classes
             {
                 labelDisease.Content = "Гемофилия";
                 labelProb.Content = person.diseases[0].calculated_probability;
+
+                if (person.diseases[0].calculated_probability < 0.25)
+                    labelProb.Background = Brushes.LightGreen;
+                else if (person.diseases[0].calculated_probability < 0.75)
+                    labelProb.Background = Brushes.LightYellow;
+                else 
+                    labelProb.Background = Brushes.IndianRed;
             }
             else
             {
