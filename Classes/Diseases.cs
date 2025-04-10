@@ -24,7 +24,7 @@ namespace DiseaseCalculator.Classes
         }
     }
 
-    class Hemophilia : Disease_abstraction
+    class Hemophilia : Disease_abstraction// add new diseases
     {
         static Hemophilia singleInstance = new Hemophilia();
 

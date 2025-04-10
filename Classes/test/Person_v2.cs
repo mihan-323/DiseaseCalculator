@@ -31,6 +31,10 @@ namespace DiseaseCalculator.Classes
             //make a loop through all diseases
             Predicate<PersonalDisease> search = x => x.Equals(new PersonalDisease(Hemophilia.GetHemophiliaInstance(), true));
 
+            //Predicate<PersonalDisease>[] predicates = new Predicate<PersonalDisease>[6];
+            //predicates[0] = x => x.Equals(new PersonalDisease(Hemophilia.GetHemophiliaInstance(), true));
+            //foreach disease in predicates
+
             if (gender == true)
             {
                 if (mother != null)
@@ -153,7 +157,7 @@ namespace DiseaseCalculator.Classes
                 throw new Exception("Болезнь уже добавлена");
 
             // 100%?
-            diseases.Add(new PersonalDisease(Hemophilia.GetHemophiliaInstance(), true));
+            diseases1.Add(new PersonalDisease(Hemophilia.GetHemophiliaInstance(), true));
         }
 
         // для проверки работоспособности
@@ -163,7 +167,7 @@ namespace DiseaseCalculator.Classes
                 throw new Exception("Болезнь не найдена");
 
             // 100%?
-            diseases.remove();///------
+            diseases1.Clear();///------
         }
     }
 }

@@ -36,35 +36,59 @@ namespace DiseaseCalculator
         private void GraphCreate(object sender, RoutedEventArgs e)
         {
             // create persons
-            Person alexey_1 = new Person("Алексей", true);
+            /*Person alexey_1 = new Person("Алексей", true);
             Person alexandra_2 = new Person("Александра", false);
             Person nikolayII_3 = new Person("Николай II", true);
             Person ludvig_4 = new Person("Людвиг", true);
             Person alisa_5 = new Person("Алиса", false);
             Person albert_6 = new Person("Альберт", true);
-            Person victoria_7 = new Person("Виктория", false);
+            Person victoria_7 = new Person("Виктория", false);*/
+
+            PersonControl[] personControls = new PersonControl[7];
+
+            personControls[0] = addPerson("Алексей", true, 300, 50);
+            personControls[1] = addPerson("Александра", false, 150, 250);
+            personControls[2] = addPerson("Николай II", true, 400, 250);
+            personControls[3] = addPerson("Людвиг", true, 150, 450);
+            personControls[4] = addPerson("Алиса", false, 400, 450);
+            personControls[5] = addPerson("Альберт", true, 150, 650);
+            personControls[6] = addPerson("Виктория", false, 400, 650);
 
             // create controls
-            PersonControl c_alexe = diagram.CreatePersonControl(alexey_1, 300, 50);
+            /*PersonControl c_alexe = diagram.CreatePersonControl(alexey_1, 300, 50);
             PersonControl c_alexa = diagram.CreatePersonControl(alexandra_2, 150, 250);
             PersonControl c_nikol = diagram.CreatePersonControl(nikolayII_3, 400, 250);
             PersonControl c_ludvi = diagram.CreatePersonControl(ludvig_4, 150, 450);
             PersonControl c_alisa = diagram.CreatePersonControl(alisa_5, 400, 450);
             PersonControl c_alber = diagram.CreatePersonControl(albert_6, 150, 650);
-            PersonControl c_victo = diagram.CreatePersonControl(victoria_7, 400, 650);
+            PersonControl c_victo = diagram.CreatePersonControl(victoria_7, 400, 650);*/
 
-            graph.SetTarget(c_alexa);
+            /*graph.SetTarget(c_alexa);
 
             graph.AddVertex(c_alexa, c_alexe);
             graph.AddVertex(c_nikol, c_alexe);
             graph.AddVertex(c_ludvi, c_alexa);
             graph.AddVertex(c_alisa, c_alexa);
             graph.AddVertex(c_alber, c_alisa);
-            graph.AddVertex(c_victo, c_alisa);
+            graph.AddVertex(c_victo, c_alisa);*/
+
+            graph.SetTarget(personControls[1]);
+
+            graph.AddVertex(personControls[1], personControls[0]);
+            graph.AddVertex(personControls[2], personControls[0]);
+            graph.AddVertex(personControls[3], personControls[1]);
+            graph.AddVertex(personControls[4], personControls[1]);
+            graph.AddVertex(personControls[5], personControls[4]);
+            graph.AddVertex(personControls[6], personControls[4]);
 
             diagram.Recalculate();
 
             UpdateMenu();
+        }
+
+        private PersonControl addPerson(string name, bool gender, int x, int y) 
+        {
+            return diagram.CreatePersonControl(new Person(name, gender), x, y);
         }
 
         // пока не работет
