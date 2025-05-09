@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DiseaseCalculator.Classes
+namespace DiseaseCalculator.Test
 {
     class Person2//rewrite to work with any disease//pack into functions things in main file
     {

@@ -10,8 +10,9 @@ namespace DiseaseCalculator.Classes
 {
     class Person//rewrite to work with any disease//pack into functions things in main file
     {
-        publiс string name;
+
         public readonly bool gender;//true = male
+        public readonly string name;
         public Person? mother;
         public Person? father;
         public List<PersonalDisease> diseases1 = new List<PersonalDisease>();//chromosome 1
@@ -164,10 +165,12 @@ namespace DiseaseCalculator.Classes
         public void RemoveHemophilia()
         {
             if (!SearchHemophilia())
-                throw new Exception("Болезнь не найдена");
+                Console.WriteLine("Нет болезни");
+                //throw new Exception("Болезнь не найдена");
 
             // 100%?
             diseases1.Clear();///------
+            diseases2.Clear();///------
         }
     }
 }

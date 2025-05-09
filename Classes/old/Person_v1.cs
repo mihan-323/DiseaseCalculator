@@ -6,17 +6,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DiseaseCalculator.Classes
+namespace DiseaseCalculator.Test
 {
-    class Person
+    class Person1
     {
         public string name;
         public readonly bool gender;//true = male
-        public Person? mother;
-        public Person? father;
+        public Person1? mother;
+        public Person1? father;
         public List<PersonalDisease> diseases = new List<PersonalDisease>();
 
-        public Person(string name, bool gender)
+        public Person1(string name, bool gender)
         {
             this.name = name;
             this.gender = gender;

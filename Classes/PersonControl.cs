@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DiseaseCalculator.Classes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -376,6 +377,7 @@ namespace DiseaseCalculator.Classes
 
         public void CalculateDisease()
         {
+            person.RemoveHemophilia();
             person.Calculate();
             UpdateLabelsText();
         }

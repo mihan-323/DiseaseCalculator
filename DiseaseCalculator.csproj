@@ -8,12 +8,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Classes\Person_v2.cs" />
+    <Compile Remove="Classes\old\Person_v1.cs" />
     <Compile Remove="Classes\test\Person_v2.cs" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="Classes\Person_v2.cs" />
+    <None Include="Classes\old\Person_v1.cs" />
     <None Include="Classes\test\Person_v2.cs" />
   </ItemGroup>
 
