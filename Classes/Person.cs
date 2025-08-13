@@ -12,7 +12,7 @@ namespace DiseaseCalculator.Classes
     {
 
         public readonly bool gender;//true = male
-        public readonly string name;
+        public string name;
         public Person? mother;
         public Person? father;
         public List<PersonalDisease> diseases1 = new List<PersonalDisease>();//chromosome 1
@@ -94,13 +94,16 @@ namespace DiseaseCalculator.Classes
                 }
                 else
                 {
-                    if (rnd.Next(10) > 5)
+                   //if (rnd.Next(10) > 5)
+                   //{
+                   //    diseases1.Add(new PersonalDisease(Hemophilia.GetHemophiliaInstance(), prob));
+                   //}
+                   //else
                     {
                         diseases1.Add(new PersonalDisease(Hemophilia.GetHemophiliaInstance(), prob));
-                    }
-                    else
-                    {
+                        diseases1[0].calculated_probability = (float)(prob * 0.5);
                         diseases2.Add(new PersonalDisease(Hemophilia.GetHemophiliaInstance(), prob));
+                        diseases2[0].calculated_probability = (float)(prob * 0.5);
                     }
                     /* //try adding prob to both chromos
 					diseases1.Add(new PersonalDisease(Hemophilia.GetHemophiliaInstance(), prob / 2));
@@ -148,7 +151,7 @@ namespace DiseaseCalculator.Classes
         public bool SearchHemophilia()
         {
             Predicate<PersonalDisease> search = x => x.Equals(new PersonalDisease(Hemophilia.GetHemophiliaInstance(), true));
-            return diseases.FindAll(search).Count > 0;
+            return diseases1.FindAll(search).Count > 0 || diseases2.FindAll(search).Count > 0;
         }
 
         // для проверки работоспособности
@@ -158,19 +161,41 @@ namespace DiseaseCalculator.Classes
                 throw new Exception("Болезнь уже добавлена");
 
             // 100%?
-            diseases1.Add(new PersonalDisease(Hemophilia.GetHemophiliaInstance(), true));
+            //diseases1.Add(new PersonalDisease(Hemophilia.GetHemophiliaInstance(), true));
+
+            if(gender)
+            {
+                diseases1.Add(new PersonalDisease(Hemophilia.GetHemophiliaInstance(), true));
+            }
+            else
+            {
+                diseases1.Add(new PersonalDisease(Hemophilia.GetHemophiliaInstance(), true));
+                diseases2.Add(new PersonalDisease(Hemophilia.GetHemophiliaInstance(), true));
+            }
         }
 
         // для проверки работоспособности
         public void RemoveHemophilia()
         {
-            if (!SearchHemophilia())
-                Console.WriteLine("Нет болезни");
-                //throw new Exception("Болезнь не найдена");
+           if (!SearchHemophilia())
+               Console.WriteLine("Нет болезни");
+               //throw new Exception("Болезнь не найдена");
+           
+           // 100%?
+           //diseases1.Clear();///------
+           //diseases2.Clear();///------
+           if (gender)
+           {
+               diseases1.Clear();
+           }
+           else
+           {
+               diseases1.Clear();///------
+               diseases2.Clear();///------
+           
+           }
 
-            // 100%?
-            diseases1.Clear();///------
-            diseases2.Clear();///------
+            
         }
     }
 }

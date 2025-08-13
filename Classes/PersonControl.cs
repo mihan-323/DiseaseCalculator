@@ -267,7 +267,10 @@ namespace DiseaseCalculator.Classes
         private void BtnAddDiseaseHemophilia_Click(object sender, RoutedEventArgs e)
         {
             if (person.SearchHemophilia())
+            {
                 person.RemoveHemophilia();
+
+            }
             else
                 person.AddHemophilia();
 
@@ -288,19 +291,41 @@ namespace DiseaseCalculator.Classes
             labelName.Content = person.name;
             labelGender.Content = person.gender ? "M" : "F";
 
-            if (person.diseases.Count > 0)
+            if (person.diseases1.Count > 0 || person.diseases2.Count > 0)
             {
                 labelDisease.Content = "Гемофилия";
-                labelProb.Content = person.diseases[0].calculated_probability;
+                float prob1 = 0;
+                float prob2 = 0;
 
-                if (person.diseases[0].calculated_probability < 0.25)
+                float probSum = 0;
+
+                if (person.diseases1.Count > 0)
+                    prob1 += person.diseases1[0].calculated_probability;
+                
+                if (person.diseases2.Count > 0)
+                {
+                    prob2 += person.diseases2[0].calculated_probability;
+                }
+
+                probSum = prob1 + prob2;
+                if (probSum > 1)
+                    probSum = 1;
+
+                //labelProb.Content = prob.ToString();
+                labelProb.Content = prob1.ToString() + " : " + prob2.ToString();
+
+                if (probSum < 0.25)
                     labelProb.Background = Brushes.LightGreen;
-                else if (person.diseases[0].calculated_probability < 0.75)
+                else if (probSum < 0.75)
                     labelProb.Background = Brushes.LightYellow;
                 else 
                     labelProb.Background = Brushes.IndianRed;
 
-                if (person.diseases[0].is_ill)
+                if (person.diseases1.Count > 0)
+                    if (person.diseases1[0].is_ill)
+                    labelProb.Content = "Болен";
+                if (person.diseases2.Count > 0)
+                    if (person.diseases2[0].is_ill)
                     labelProb.Content = "Болен";
             }
             else
@@ -377,7 +402,7 @@ namespace DiseaseCalculator.Classes
 
         public void CalculateDisease()
         {
-            person.RemoveHemophilia();
+            //person.RemoveHemophilia();
             person.Calculate();
             UpdateLabelsText();
         }
